@@ -6,158 +6,71 @@ var _ = require('../lib/underscore'),
     querystring = require('querystring'),
     RES = require('./state').resources,
     request = require('request'),
-    winston = require('winston');
+    winston = require('winston'),
+    crypt = require('crypto'),
+    mysql = require('mysql');
 
 function connect() {
 	return global.redis;
 }
 
+// Logs in users who make a query ?username=USER&password=PASS
+// Upgraded to use a SQL database
 exports.login = function (req, resp) {
 	var ip = req.ident.ip;
-	// if login cookie present, redirect to board (preferably, go back. but will that be easy?)
-	var r = connect();
-	function fail(error) {
-		respond_error(resp, error)
-	}
-	if (req.query.state) {
-		var state = req.query.state;
-		r.get('github:'+state, function (err, savedIP) {
-			if (err) {
-				winston.error("Couldn't read login: " + err);
-				fail("Couldn't read login attempt.");
-				return;
-			}
-			if (!savedIP) {
-				winston.info("Expired login attempt from " + ip);
-				fail("Login attempt expired. Please try again.");
-				return;
-			}
-			if (savedIP != ip) {
-				winston.warn("IP changed from " + savedIP + " to " + ip);
-				fail("Your IP changed during login. Please try again.");
-				return;
-			}
-			if (req.query.error == 'access_denied') {
-				fail("User did not approve GitHub app access.");
-				return;
-			}
-			if (req.query.error) {
-				// escaping out of paranoia (though respond_error emits JSON)
-				var err = common.escape_html(req.query.error);
-				winston.error("OAuth error: " + err);
-				if (req.query.error_description) {
-					err = common.escape_html(req.query.error_description);
-					winston.error("Desc: " + err);
-				}
-				fail("OAuth login failure: " + err);
-				return;
-			}
-			var code = req.query.code;
-			if (!code) {
-				fail("OAuth code missing!");
-				return;
-			}
-			request_access_token(req.query.code, state, function (err, token) {
-				if (err) {
-					winston.error("Github access token: " + err);
-					fail("Couldn't obtain token from GitHub. Try again.");
-					return;
-				}
-				request_username(token, function (err, username) {
-					if (err) {
-						winston.error("Username: " + err);
-						fail("Couldn't read username. Try again.");
-						return;
-					}
-					r.del('github:'+state, function (err) {});
-					if (/^popup:/.test(state))
-						req.popup_HACK = true;
-					verify_auth(req, resp, username);
-				});
-			});
-		});
-		return;
-	}
-	// new login attempt; TODO rate limit
-	var nonce = random_str();
-	if (req.query.popup !== undefined)
-		nonce = 'popup:' + nonce;
-	r.setex('github:'+nonce, 60, ip, function (err) {
-		if (err) {
-			winston.error("Couldn't save login: " + err);
-			fail("Couldn't persist login attempt.");
-			return;
-		}
-		var params = {
-			client_id: config.GITHUB_CLIENT_ID,
-			state: nonce,
-			allow_signup: 'false',
-		};
-		var url = 'https://github.com/login/oauth/authorize?' +
-				querystring.stringify(params);
-		resp.writeHead(303, {Location: url});
-		resp.end('Redirect to GitHub Login');
-	});
-}
-
-function request_access_token(code, state, cb) {
-	var payload = {
-		client_id: config.GITHUB_CLIENT_ID,
-		client_secret: config.GITHUB_CLIENT_SECRET,
-		code: code,
-		state: state,
-	};
-	var opts = {
-		url: 'https://github.com/login/oauth/access_token',
-		body: payload,
-		json: true,
-	};
-	request.post(opts, function (err, tokenResp, packet) {
-		if (err || !packet || typeof packet.access_token != 'string') {
-			cb(err || "No access token in response");
-		}
-		else {
-			cb(null, packet.access_token);
-		}
-	});
-}
-
-function request_username(token, cb) {
-	var opts = {
-		url: 'https://api.github.com/user',
-		headers: {Authorization: 'token ' + token, 'User-Agent': 'Doushio-Auth'},
-		json: true,
-	};
-	request.get(opts, function (err, usernameResp, packet) {
-		if (err || !packet || typeof packet.login != 'string') {
-			cb(err || "Invalid username response");
-		}
-		else {
-			cb(null, packet.login);
-		}
-	});
-}
-
-function verify_auth(req, resp, user) {
-	if (!user)
-		return respond_error(resp, 'Invalid username.');
+	var user = req.query.username;
+	var password = req.query.password;
 	var ip = req.ident.ip;
 	var packet = {ip: ip, user: user, date: Date.now()};
-	if (config.ADMIN_GITHUBS.indexOf(user) >= 0) {
-		winston.info("@" + user + " logging in as admin from " + ip);
-		packet.auth = 'Admin';
-		exports.set_cookie(req, resp, packet);
+	// Need to upgrade to POST sometime
+	if (!user || !password) {
+		resp.writeHead(200, {'Content-Type': 'text/html'});
+		resp.end('<!doctype html><title>Login</title><form method=GET>' +
+			'Username <input type="text" name="username" id="username" value="" maxlength="20" /></br>' +
+			'Password <input type="password" name="password" id="password" value="" maxlength="20" /> ' +
+			'<input type="submit" value="Login"/></form>');
+		return;
 	}
-	else if (config.MODERATOR_GITHUBS.indexOf(user) >= 0) {
-		winston.info("@" + user + " logging in as moderator from " + ip);
-		packet.auth = 'Moderator';
-		exports.set_cookie(req, resp, packet);
-	}
-	else {
-		winston.error("Login attempt by @" + user + " from " + ip);
-		return respond_error(resp, 'Check your privilege.');
-	}
-};
+	var connection = mysql.createConnection({
+	host     : 'localhost',
+	user     : config.MYSQL_USER,
+	password : config.MYSQL_PASS,
+	database : config.MYSQL_DATABASE
+	});
+	if (!user || !password)
+		return respond_error(resp, 'Invalid username or password.');
+	// Initialize the SQL Database
+	connection.connect();
+	// Prepare and execute a SQL query
+	// Results of the SQL query are put in rows[0] (assuming unique usernames)
+	connection.query('SELECT password,is_admin,is_mod FROM ' + config.MYSQL_TABLE + ' WHERE username="' + user + '"', function(err,rows) {
+		if (!err) {
+			// Compare the gotten password with the hashed password in the MYSQL table
+			var sha = crypto.createHash('sha512').update(password);
+			var hashedPassword = sha.digest('hex');
+			// Kick out unauthenticated users
+			if (!rows[0] || hashedPassword != rows[0].password) {
+				winston.error("Login attempt by @" + user + " from " + ip);
+				return respond_error(resp, 'Check your privilege.');
+			}
+			// Log in administrators
+			if (rows[0].is_admin == "y") {
+				winston.info("@" + user + " logging in as admin from " + ip);
+				packet.auth = 'Admin';
+				exports.set_cookie(req, resp, packet);
+			}
+			// Log in moderators
+			else if (rows[0].is_mod == "y") {
+				winston.info("@" + user + " logging in as moderator from " + ip);
+				packet.auth = 'Moderator';
+				exports.set_cookie(req, resp, packet);
+			}
+		}
+		else
+			winston.warn("SQL database " + config.MYSQL_DATABASE + "is not accessible");
+	});
+	connection.end();
+}
 
 exports.set_cookie = function (req, resp, info) {
 	var pass = random_str();

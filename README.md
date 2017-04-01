@@ -5,7 +5,8 @@ Setup:
 
 * Install dependencies listed below
 * Sign up for reCAPTCHA
-* Create a GitHub Application (callback URL = site URL + /login)
+* Create a MySQL table with at least the rows username, password, is_mod and is_admin
+* Fill out the Table with admin/mod credentials (password is a SHA512 hash)
 * Copy config.js.example to config.js and configure
 * Copy hot.js.example to hot.js and configure
 * Copy imager/config.js.example to imager/config.js and configure

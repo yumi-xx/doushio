@@ -3,3 +3,4 @@
 * Tokenize text instead of multiple levels of regexps
 * Should retrieve live body and hctr in one transaction
 * Consolidate or disambiguate the (three!) different hook/trigger mechanisms
+* Implement a more eye-catchey /login page

@@ -9,6 +9,11 @@ var config = {
 	SERVE_IMAGES: false,
 	GZIP: false, /* not preferred; use nginx (or other)'s gzipping */
 	USE_WEBSOCKETS: true,
+	
+	MYSQL_USER: "root",
+	MYSQL_PASS: "hackme",
+	MYSQL_DATABASE: "mysql_database",
+	MYSQL_TABLE: "mysql_table",
 
 	REDIS_PORT: 6379,
 	READ_ONLY: false,
@@ -31,10 +36,6 @@ var config = {
 	EXCLUDE_REGEXP: /[\u2000-\u200f\u202a-\u202f\u205f-\u206f]+/g,
 	SAGE_ENABLED: true,
 
-	ADMIN_GITHUBS: ['lalcmellkmal'],
-	MODERATOR_GITHUBS: [],
-	GITHUB_CLIENT_ID: '',
-	GITHUB_CLIENT_SECRET: '',
 	LOGIN_COOKIE_DOMAIN: 'example.com',
 	LOGIN_SESSION_TIME: 60*60*24*14,
 	IP_MNEMONIC: true,
