@@ -280,8 +280,15 @@ article .hat {
 	margin-bottom: 7px;
 	min-width: 100px;
 }
-#feedback {
+#feedback,#rules {
 	color: gray;
+	bloat: right;
+	position: relative;
+	display: block;
+	text-align:right;
+	margin-bottom: 2px;
+}
+#info {
 	position: absolute;
 	right: 0.2em;
 	top: 0.2em;
