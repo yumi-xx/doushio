@@ -18,9 +18,10 @@ var config = {
 	REDIS_PORT: 6379,
 	READ_ONLY: false,
 
-	BOARDS: ['moe', 'gar', 'meta', 'archive', 'staff'],
+	BOARDS: ['moe', 'gar', 'meta', 'archive', 'staff', 'yu'],
 	DEFAULT_BOARD: 'moe',
 	GAME_BOARDS: ['moe', 'archive'],
+	HIDDEN_BOARDS: ['yu'],
 	STAFF_BOARD: 'staff',
 	THREADS_PER_PAGE: 10,
 	ABBREVIATED_REPLIES: 5,
@@ -35,6 +36,7 @@ var config = {
 	SUBJECT_MAX_LENGTH: 50,
 	EXCLUDE_REGEXP: /[\u2000-\u200f\u202a-\u202f\u205f-\u206f]+/g,
 	SAGE_ENABLED: true,
+	WORDFILTERS_ENABLED: false,
 
 	LOGIN_COOKIE_DOMAIN: 'example.com',
 	LOGIN_SESSION_TIME: 60*60*24*14,

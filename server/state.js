@@ -157,6 +157,8 @@ function make_navigation_html() {
 	config.BOARDS.forEach(function (board, i) {
 		if (board == config.STAFF_BOARD)
 			return;
+		if (config.HIDDEN_BOARDS.indexOf(board) > -1)
+			return;
 		if (i > 0)
 			bits.push(' / ');
 		bits.push('<a href="../'+board+'/">'+board+'</a>');

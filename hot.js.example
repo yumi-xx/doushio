@@ -4,6 +4,7 @@ this.hot = {
 		moe: "/moe/ - Sweets",
 		gar: "/gar/ - Hard Work &amp; Guts",
 		meta: "/meta/ - The Abyss",
+		yu: "/yu/ - 湯",
 		archive: "/archive/",
 		graveyard: "/graveyard/",
 		staff: "/staff/",
@@ -11,6 +12,7 @@ this.hot = {
 	/* Default theme to use on each board */
 	BOARD_CSS: {
 		moe: 'moe',
+		yu: 'ashita'
 		gar: 'gar',
 		meta: 'mawaru',
 		archive: 'archive',

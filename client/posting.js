@@ -1,6 +1,8 @@
 var saku, postForm;
 var UPLOADING_MSG = 'Uploading...';
 
+
+
 connSM.on('synced', postSM.feeder('sync'));
 connSM.on('dropped', postSM.feeder('desync'));
 connSM.on('desynced', postSM.feeder('desync'));
@@ -75,18 +77,14 @@ function handle_shortcut(event) {
 		else
 			eject = 0;
 	}
-	else if (event.shiftKey && k > 85 && k < 88) {
-		if (k == 86 && ++vapor > 10) {
+	else if (event.shiftKey && k == 86) {
+		if (++vapor > 10) {
 			vapor = -1;
 			if (postForm)
 				postForm.$input.val('');
 			flash_bg('#f98aa5');
 			event.stopImmediatePropagation();
 			event.preventDefault();
-		}
-		if (k == 87 && ++wombo > 10) {
-			wombo = -1;
-			$.getScript(mediaURL + 'js/wordfilter.js');
 		}
 	}
 	else
@@ -281,6 +279,9 @@ initialize: function (dest) {
 				this.$subject);
 		this.blockquote.hide();
 	}
+	if (config.WORDFILTERS_ENABLED)
+		$.getScript(mediaURL + 'js/wordfilter.js');
+	
 	this.uploadForm = this.make_upload_form();
 	post.append(this.uploadForm);
 	oneeSama.trigger('draft', post);
@@ -557,7 +558,7 @@ add_ref: function (num) {
 	/* If a >>link exists, put this one on the next line */
 	var $input = this.$input;
 	var val = $input.val();
-	if (/^>>\d+$/.test(val)) {
+	if (/^>>\d+$/.test(val) || /^>>>[a-z]+$/.test(val)) {
 		$input.val(val + '\n');
 		this.on_input();
 		val = $input.val();
@@ -667,6 +668,7 @@ make_alloc_request: function (text, image) {
 
 commit: function (text) {
 	var lines;
+
 	if (text.indexOf('\n') >= 0) {
 		lines = text.split('\n');
 		this.line_count += lines.length - 1;
