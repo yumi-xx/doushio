@@ -130,6 +130,7 @@ exports.write_board_head = function (out, board, nav) {
 exports.write_thread_head = function (out, board, op, opts) {
 	var indexTmpl = RES.indexTmpl;
 	var title = '/'+escape(board)+'/ - ';
+	var announcement = STATE.hot.BOARD_ANNOUNCEMENTS[board];
 	if (opts.subject)
 		title += escape(opts.subject) + ' (#' + op + ')';
 	else
@@ -148,6 +149,8 @@ exports.write_thread_head = function (out, board, op, opts) {
 		out.write(RES.navigationHtml);
 	out.write(indexTmpl[i++]);
 	out.write('Thread #' + op);
+	out.write(indexTmpl[i++]);
+	out.write(announcement);
 	out.write(indexTmpl[i++]);
 	var buttons = common.action_link_html('#bottom', 'Bottom') + ' ' +
 			common.action_link_html('#persona', 'Persona', 'persona');
