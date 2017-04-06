@@ -107,6 +107,7 @@ function make_link_rels(board, bits) {
 exports.write_board_head = function (out, board, nav) {
 	var indexTmpl = RES.indexTmpl;
 	var title = STATE.hot.TITLES[board] || escape(board);
+	var announcement = STATE.hot.BOARD_ANNOUNCEMENTS[board];
 	var metaDesc = "Real-time imageboard";
 
 	var i = 0;
@@ -121,6 +122,8 @@ exports.write_board_head = function (out, board, nav) {
 		out.write(RES.navigationHtml);
 	out.write(indexTmpl[i++]);
 	out.write(title);
+	out.write(indexTmpl[i++]);
+	out.write(announcement);
 	out.write(indexTmpl[i++]);
 };
 

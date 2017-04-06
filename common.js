@@ -534,7 +534,7 @@ OS.spoiler_info = function (index, toppu) {
 	var large = toppu || this.thumbStyle == 'large';
 	var hd = toppu || this.thumbStyle != 'small';
 	return {
-		thumb: encodeURI(mediaURL + 'kana/spoiler' + (hd ? '' : 's')
+		thumb: encodeURI(mediaURL + 'spoilers/spoiler' + (hd ? '' : 's')
 				+ index + '.png'),
 		dims: large ? imagerConfig.THUMB_DIMENSIONS
 				: imagerConfig.PINKY_DIMENSIONS,
@@ -558,7 +558,7 @@ function pick_spoiler(metaIndex) {
 exports.pick_spoiler = pick_spoiler;
 
 function new_tab_link(srcEncoded, inside, cls) {
-	return [safe('<a href="' + srcEncoded + '" target="_blank"' +
+	return [safe('<a href="' + srcEncoded + '" onclick="return false;"  target="_blank"' +
 		(cls ? ' class="'+cls+'"' : '') +
 		' rel="nofollow">'), inside, safe('</a>')];
 }

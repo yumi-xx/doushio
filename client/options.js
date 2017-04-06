@@ -287,7 +287,25 @@ $DOC.on('mouseup', 'img, video', function (event) {
 	}
 });
 
-$DOC.on('click', 'img, video', function (event) {
+$DOC.on('click', 'video', function (event) {
+	var offset = $(this).offset();
+	var height = $(this).height();
+	var y = (event.pageY - offset.top - height) * -1;
+	if (y > 35){
+		if (options.get('inlinefit') != 'none') {
+			var $target = $(this);
+			if (!$target.data('skipExpand'))
+				toggle_expansion($target, event);
+		}
+
+	
+	}
+
+});
+
+
+
+$DOC.on('click', 'img', function (event) {
 	if (options.get('inlinefit') != 'none') {
 		var $target = $(this);
 		if (!$target.data('skipExpand'))
@@ -382,7 +400,7 @@ function expand_image($img) {
 			thumbWidth: tw, thumbHeight: th,
 			thumbSrc: $img.attr('src'),
 		},
-		prop: video ? {autoplay: true, loop: true} : {},
+		prop: video ? {autoplay: true, loop: true, controls: true} : {},
 	}).appendTo(a);
 
 	var fit = options.get('inlinefit');

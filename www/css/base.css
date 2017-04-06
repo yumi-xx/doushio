@@ -81,6 +81,10 @@ h3 {
 	display: inline;
 	font-size: inherit;
 }
+#announcements {
+	text-align: center;
+	color: #FF0000;
+}
 header {
 	background: url('ui/box.png') left 3px no-repeat;
 	margin-left: -14px;
