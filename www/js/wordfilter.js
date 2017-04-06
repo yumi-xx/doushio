@@ -96,6 +96,7 @@ ComposerView.prototype.word_filter = function (words) {
 			jews: 'arabs',
 			arabs: 'jews',
 			overwatch: 'OVERMAN',
+			MAGA : 'Politics do NOT belong on this board',
 		}[orig.toLowerCase()];
 		if (word && word.indexOf(',') >= 0) {
 			word = word.split(',');

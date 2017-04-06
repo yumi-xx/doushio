@@ -17,6 +17,7 @@
 		"async": "2.1.4",
 		"formidable": "1.0.17",
 		"minimist": "1.2.0",
+		"mysql": "2.13.0",
 		"nan": "2.5.0",
 		"recaptcha": "1.2.1",
 		"redis": "2.6.3",
