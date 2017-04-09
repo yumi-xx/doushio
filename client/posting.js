@@ -254,15 +254,32 @@ initialize: function (dest) {
 	this.pending = '';
 	this.line_count = 1;
 	this.char_count = 0;
-	this.imouto = new OneeSama(function (num) {
-		var $s = $('#' + num);
+	this.imouto = new OneeSama(function (ref) {
+		if (config.BOARDS.indexOf(ref) >= 0 ) {
+			var $s = $('>' + ref);
+			var board = ref;
+		}
+		else if (!isNaN(ref)) {
+			var $s = $('#' + ref);
+			var num = ref;
+		}
+		else {
+			this.callback(safe('<a class="nope">&gt;&gt;' + ref
+					+ '</a>'));
+			return;
+		}
 		if (!$s.is('section'))
 			$s = $s.closest('section');
-		if ($s.is('section'))
+		// Clean this up later
+		// Question: what does $s.is('section') mean? Where is
+		// that function?
+		if (num && !board) {
 			this.callback(this.post_ref(num, extract_num($s)));
-		else
-			this.callback(safe('<a class="nope">&gt;&gt;' + num
-					+ '</a>'));
+		}
+		else if (!num && board) {
+			this.callback(this.board_ref(board));
+		}
+
 	});
 	this.imouto.callback = inject;
 	this.imouto.op = THREAD;
@@ -279,8 +296,9 @@ initialize: function (dest) {
 				this.$subject);
 		this.blockquote.hide();
 	}
-	if (config.WORDFILTERS_ENABLED)
-		$.getScript(mediaURL + 'js/wordfilter.js');
+// Word filters are broken when they are always on
+//	if (config.WORDFILTERS_ENABLED)
+//		$.getScript(mediaURL + 'js/wordfilter.js');
 	
 	this.uploadForm = this.make_upload_form();
 	post.append(this.uploadForm);
@@ -448,7 +466,7 @@ on_input: function (val) {
 		}
 	}
 	/* and SoundCloud links */
-	while (true) {
+	while (false) {
 		var m = val.match(soundcloud_url_re);
 		if (!m)
 			break;
@@ -551,22 +569,76 @@ vaporize: function (text, ward_start, ward_end) {
 },
 
 word_filter: function (words) {
-	return words;
+// DIRTY HACK PLEASE FIX IN THE MORNING
+        if (words.indexOf('?v=') > -1)
+                return words;
+	return words.replace(/(\w+)/g, function (orig) {
+		var word = {
+			'filter': 'improver',
+			'filters': 'improves',
+			'filtering': 'improving',
+			'filtered': 'improved',
+			'doushio': 'どうしお',
+			'anime': 'アニメ',
+			'weaboo': 'gaijin',
+			'weaboos': 'gaijin',
+			'mad': '［ＭＡＤ］',
+			'angry': '［ＭＡＤ］',
+			'enrage': '［ＭＡＤ］',
+			'enraged': '［ＭＡＤ］',
+			'bothered': '［ＭＡＤ］',
+			'touhou': '2hu',
+			'nigger': 'roody-poo',
+			'niggers': 'roody-poos',
+			'nigga': 'roody-poo',
+			'niggas': 'roody-poos',
+			'nig': 'roody-poo',
+			'faggot': 'candy-ass',
+			'fags': 'candy-asses',
+			'cuck': 'A H H H HH H H F U C K I L OV E DICKS',
+			'cucks': 'I  CANNOT STOP JACKING IT',
+			'smh': 'baka',
+			'tbh': 'desu',
+			'fam': 'senpai',
+			'pajeet': 'hard-working immigrant',
+			'pajeets': 'hard-working immigrants',
+			'jews': 'arabs',
+			'arabs': 'jews',
+			'overwatch': 'OVERMAN',
+			'MAGA': 'Politics do NOT belong on this board'
+                }[orig.toLowerCase()];
+		if (word && word.indexOf(',') >= 0) {
+	                        word = word.split(',');
+				word = word[Math.floor(Math.random() * word.length)];
+			}
+		return (word || orig);
+        });
+			
 },
 
-add_ref: function (num) {
-	/* If a >>link exists, put this one on the next line */
-	var $input = this.$input;
-	var val = $input.val();
-	if (/^>>\d+$/.test(val) || /^>>>[a-z]+$/.test(val)) {
-		$input.val(val + '\n');
+add_ref: function (ref) {
+	if (config.BOARDS.indexOf(ref) < 0) {
+		/* If a >>link exists, put this one on the next line */
+		var num = ref;
+		var $input = this.$input;
+		var val = $input.val();
+		if (/^>>\d+$/.test(val)) {
+			$input.val(val + '\n');
+			this.on_input();
+			val = $input.val();
+		}
+		$input.val(val + '>>' + num);
+		$input[0].selectionStart = $input.val().length;
 		this.on_input();
-		val = $input.val();
+		$input.focus();
 	}
-	$input.val(val + '>>' + num);
-	$input[0].selectionStart = $input.val().length;
-	this.on_input();
-	$input.focus();
+	else {
+		var board = ref;
+		$input.val(val + '>>>/' + board + '/');
+		$input[0].selectionStart = $input.val().length;
+		this.on_input();
+		$input.focus();
+	}
 },
 
 find_time_arg: function (params) {
@@ -666,6 +738,7 @@ make_alloc_request: function (text, image) {
 	return msg;
 },
 
+// Client-side, run when text ought to be sent to the server
 commit: function (text) {
 	var lines;
 

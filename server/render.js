@@ -9,14 +9,24 @@ var caps = require('./caps'),
 var RES = STATE.resources;
 var escape = common.escape_html;
 
-function tamashii(num) {
-	var op = db.OPs[num];
-	if (op && caps.can_access_thread(this.ident, op))
-		this.callback(this.post_ref(num, op));
-	else
-		this.callback('>>' + num);
+// TODO I should seperate board_refs and post_links into seperate fns
+function tamashii(link) {
+	if (config.BOARDS.indexOf(link) < 0) {
+		var num = link;
+		var op = db.OPs[num];
+		if (op && caps.can_access_thread(this.ident, op))
+			this.callback(this.post_ref(num, op));
+		else
+			this.callback('>>' + num);
+	}
+	else {
+		var board = link;
+		if (caps.can_access_board(this.ident, board))
+			this.callback(this.board_ref(board));
+		else
+			this.callback('>>>/' + board + '/');
+	}
 }
-
 exports.write_thread_html = function (reader, req, out, opts) {
 	var oneeSama = new common.OneeSama(tamashii);
 	oneeSama.tz_offset = req.tz_offset;
