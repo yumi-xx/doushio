@@ -521,7 +521,8 @@ on_input: function (val) {
 	var nl = val.lastIndexOf('\n');
 	if (nl >= 0) {
 		var ok = val.substr(0, nl);
-		ok = this.word_filter(ok);
+		if (config.WORDFILTERS_ENABLED)
+			ok = this.word_filter(ok);
 		val = val.substr(nl+1);
 		$input.val(val);
 		if (this.model.get('sentAllocRequest') || /[^ ]/.test(ok))
@@ -540,7 +541,8 @@ on_input: function (val) {
 
 	if (lim > 0) {
 		var destiny = val.substr(0, lim);
-		destiny = this.word_filter(destiny);
+		if (config.WORDFILTERS_ENABLED)
+			destiny = this.word_filter(destiny);
 		this.commit(destiny);
 		val = val.substr(lim);
 		start -= lim;
