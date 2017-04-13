@@ -15,6 +15,7 @@ DEFINES.DELETE_THREAD = 10;
 DEFINES.LOCK_THREAD = 11;
 DEFINES.UNLOCK_THREAD = 12;
 DEFINES.REPORT_POST = 13;
+DEFINES.BAN_POST = 14;
 
 DEFINES.PING = 30;
 DEFINES.IMAGE_STATUS = 31;
@@ -195,7 +196,9 @@ var OS = OneeSama.prototype;
 
 var break_re = new RegExp("(\\S{" + DEFINES.WORD_LENGTH_LIMIT + "})");
 /* internal refs, embeds */
-var ref_re = />>(\d+|>\/\w+\/|>\/watch\?v=[\w-]{11}(?:#t=[\dhms]{1,9})?|>\/soundcloud\/[\w-]{1,40}\/[\w-]{1,80}|>\/@\w{1,15}\/\d{4,20}(?:\?s=\d+)?|>\/a\/\d{0,10})/;
+var ref_re = />>(\d+|>\/[a-z]+\/|>\/watch\?v=[\w-]{11}(?:#t=[\dhms]{1,9})?|>\/soundcloud\/[\w-]{1,40}\/[\w-]{1,80}|>\/@\w{1,15}\/\d{4,20}(?:\?s=\d+)?|>\/a\/\d{0,10})/g;
+// Uncomment to remove searching for embedded links
+// var ref_re = />>(\d+|>\/[a-z]+\/)/;
 
 OS.hook = function (name, func) {
 	var hs = this.hooks[name];
@@ -227,6 +230,7 @@ OS.red_string = function (ref) {
 	var dest, linkClass;
 	// Handle board references
 	if (config.BOARDS.indexOf(ref.slice(2, ref.length-1)) >= 0) {
+
 		var board = ref.slice(2, ref.length-1);
 		this.tamashii(board);
 		return;
@@ -830,7 +834,7 @@ OS.kinpira = function (text) {
 
 // Convert text URLs to clickable links
 // *Not* recommended. Use at your own risk.
-var LINKIFY = false;
+var LINKIFY = true;
 
 /// optional 6th tokenization stage
 if (LINKIFY) { OS.linkify = function (text) {
@@ -1159,9 +1163,14 @@ OS.mono = function (data) {
 	    o = safe('\t<article id="'+data.num+'"' +
 			(cls ? ' class="'+cls+'"' : '') +
 			(info.style ? ' style="'+info.style+'"' : '') +
-			'>'),
+			'>');
+	if (data.was_banned)
+		c = safe('<span id="banned">(USER WAS BANNED FOR THIS POST)</span></article>'),
+		gen = this.monogatari(data, false);
+	else {
 	    c = safe('</article>\n'),
 	    gen = this.monogatari(data, false);
+	}
 	return flatten([o, gen.header, gen.image || '', gen.body, c]).join('');
 };
 

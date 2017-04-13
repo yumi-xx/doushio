@@ -15,6 +15,8 @@ function show_toolbox() {
 		{name: 'Lock', kind: 11},
 	];
 	if (IDENT.auth == 'Admin')
+		specs.push({name: 'Move', kind: 34});
+		specs.push({name: 'Ban', kind: 14});
 		specs.push({name: 'Panel', kind: 'panel'});
 	var $toolbox = $('<div/>', {id: 'toolbox', "class": 'mod'});
 

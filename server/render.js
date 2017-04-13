@@ -79,8 +79,8 @@ exports.write_thread_html = function (reader, req, out, opts) {
 		reader.once('endthread', close_section);
 	});
 
-
 	reader.on('post', function (post) {
+
 		if (post.num in hidden || post.op in hidden)
 			return;
 		if (write_see_all_link) {
@@ -88,6 +88,7 @@ exports.write_thread_html = function (reader, req, out, opts) {
 			write_see_all_link = null;
 		}
 		out.write(oneeSama.mono(post));
+
 	});
 
 	function close_section() {

@@ -272,6 +272,8 @@ function update_cache(chan, msg) {
 		}
 	}
 	else if (kind == common.MOVE_THREAD) {
+		console.log("moving thread!");
+		console.log("set_op_tag(" + config.BOARDS.indexOf(tag) + ", " + op);
 		set_OP_tag(config.BOARDS.indexOf(tag), op);
 	}
 	else if (kind == common.DELETE_POSTS) {
@@ -284,6 +286,9 @@ function update_cache(chan, msg) {
 			delete OPs[num];
 		});
 		delete TAGS[op];
+	}
+	else if (kind == common.BAN_POST) {
+		console.log("Banning posts: " + msg);
 	}
 }
 
@@ -659,6 +664,7 @@ Y.insert_post = function (msg, body, extra, callback) {
 		callback(null);
 	});
 };
+
 
 Y.remove_post = function (from_thread, num, callback) {
 	num = parse_number(num);
@@ -1295,6 +1301,7 @@ Y.get_post_op = function (num, callback) {
 	});
 }
 
+
 Y.get_tag = function (page) {
 	var r = this.connect();
 	var self = this;
@@ -1327,6 +1334,7 @@ Y.get_tag = function (page) {
 		self._get_each_thread(reader, 0, nums);
 	});
 };
+
 
 Y._get_each_thread = function (reader, ix, nums) {
 	if (!nums || ix >= nums.length) {

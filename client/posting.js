@@ -466,7 +466,7 @@ on_input: function (val) {
 		}
 	}
 	/* and SoundCloud links */
-	while (false) {
+	while (true) {
 		var m = val.match(soundcloud_url_re);
 		if (!m)
 			break;
@@ -570,11 +570,9 @@ vaporize: function (text, ward_start, ward_end) {
 	return aesthetic;
 },
 
+// When passed a list of words, this function returns the filtered version
 word_filter: function (words) {
-// DIRTY HACK PLEASE FIX IN THE MORNING
-        if (words.indexOf('?v=') > -1)
-                return words;
-	return words.replace(/(\w+)/g, function (orig) {
+	return words.replace(/\w+/g, function (orig) {
 		var word = {
 			'filter': 'improver',
 			'filters': 'improves',
@@ -607,13 +605,12 @@ word_filter: function (words) {
 			'jews': 'arabs',
 			'arabs': 'jews',
 			'overwatch': 'OVERMAN',
-			'MAGA': 'Politics do NOT belong on this board'
+			'maga': 'Politics do NOT belong on this board'
                 }[orig.toLowerCase()];
-		if (word && word.indexOf(',') >= 0) {
-	                        word = word.split(',');
-				word = word[Math.floor(Math.random() * word.length)];
-			}
-		return (word || orig);
+		console.log("Word: " + word);
+		if (word && typeof word === 'string')
+			return word;
+		return orig;
         });
 			
 },
