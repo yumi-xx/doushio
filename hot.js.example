@@ -1,5 +1,5 @@
 this.hot = {
-	EMAIL: "lalc@doushio.com",
+	EMAIL: "/dev/null",
 	TITLES: {
 		moe: "/moe/ - Sweets",
 		gar: "/gar/ - Hard Work &amp; Guts",
@@ -18,6 +18,15 @@ this.hot = {
 		archive: 'archive',
 		graveyard: 'mawaru',
 		staff: 'moe',
+	},
+	BOARD_ANNOUNCEMENTS: {
+		moe: '',
+		yu: '',
+		staff: '',
+		gar: '',
+		archive: '',
+		graveyard: '',
+		meta: '',
 	},
 
 	/* Bump this version whenever you change base.css */

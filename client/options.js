@@ -126,6 +126,7 @@ var themes = [
 	'console',
 	'tea',
 	'higan',
+	'ncsu',
 ];
 
 function option_theme(theme) {

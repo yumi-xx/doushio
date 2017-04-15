@@ -1,12 +1,29 @@
 body {
-	background: black url('../gazou/autumn.jpg') no-repeat;
+	background: black url('../divinity/back.jpg') no-repeat;
 	background-size: 100%;
 	font-family: "MS Pゴシック", "MS PGothic", "Mona", "Hiragino Kaku Gothic Pro";
 	font-size: 12pt;
+	font-family: Arial;
 }
-div {
-	color: #f0f0f0;
+div#countdown {
+	color: #000000;
 	margin-top: 100px;
 	text-align: center;
-	text-shadow: #800 0px 2px 0px;
+
+}
+div#info {
+	display: block;
+        position: absolute;
+	text-align: center;
+        left: 5%;
+	max-width: 15%;
+	top:10px;
+}
+a {
+ 	color: #ff0000;
+        text-decoration: none;
+}
+a:hover {
+        text-decoration: none;
+        color: #d17c43;
 }

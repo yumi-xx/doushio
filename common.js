@@ -801,13 +801,14 @@ OS.geimu = function (text) {
 
 /// 5th tokenization stage; parses ^s
 OS.kinpira = function (text) {
-	if (!/[＾^]/.test(text) || /^([＾^]_|:[＾^])/.test(text)) {
+//	if (!/[＾^]/.test(text) || /^([＾^]_|:[＾^])/.test(text)) {
 		if (LINKIFY)
 			this.linkify(text);
 		else
 			this.callback(text);
 		return;
-	}
+// This section will be deprecated with a math parser in future commits
+/*	}
 	var bits = text.split(/[＾^]/);
 	// remove trailing ^s
 	while (bits.length && bits[bits.length-1] == '')
@@ -829,7 +830,7 @@ OS.kinpira = function (text) {
 	this.sup_level = 0;
 	soup = safe('</sup>');
 	for (var i = 0; i < n; i++)
-		this.callback(soup);
+		this.callback(soup);*/
 };
 
 // Convert text URLs to clickable links

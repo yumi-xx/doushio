@@ -296,10 +296,6 @@ initialize: function (dest) {
 				this.$subject);
 		this.blockquote.hide();
 	}
-// Word filters are broken when they are always on
-//	if (config.WORDFILTERS_ENABLED)
-//		$.getScript(mediaURL + 'js/wordfilter.js');
-	
 	this.uploadForm = this.make_upload_form();
 	post.append(this.uploadForm);
 	oneeSama.trigger('draft', post);
@@ -607,7 +603,6 @@ word_filter: function (words) {
 			'overwatch': 'OVERMAN',
 			'maga': 'Politics do NOT belong on this board'
                 }[orig.toLowerCase()];
-		console.log("Word: " + word);
 		if (word && typeof word === 'string')
 			return word;
 		return orig;
@@ -740,6 +735,7 @@ make_alloc_request: function (text, image) {
 // Client-side, run when text ought to be sent to the server
 commit: function (text) {
 	var lines;
+
 
 	if (text.indexOf('\n') >= 0) {
 		lines = text.split('\n');
@@ -982,7 +978,7 @@ window.addEventListener('message', function (event) {
 }, false);
 
 function spoiler_pane_url(sp) {
-	return mediaURL + 'kana/spoil' + sp + '.png';
+	return mediaURL + 'spoilers/spoiler' + sp + '.png';
 }
 
 function preload_panes() {

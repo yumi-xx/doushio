@@ -1117,6 +1117,8 @@ function start_server() {
 
 	process.nextTick(non_daemon_pid_setup);
 
+	var time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " GMT";
+	winston.info('Started at: ' + time);
 	winston.info('Listening on '
 			+ (config.LISTEN_HOST || '')
 			+ (is_unix_socket ? '' : ':')
