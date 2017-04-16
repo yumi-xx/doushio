@@ -235,6 +235,16 @@ OS.red_string = function (ref) {
 		this.tamashii(board);
 		return;
 	}
+	// Pouting machine functionality, show off the rules page!
+	else if (ref == '>/divinity/') {
+		this.callback(safe('<a href="/divinity/index.html">>>>/divinity/</a>'));
+		return;
+	}
+	// A pleasant place
+	else if (ref == '>/senzai/') {
+		this.callback(safe('<a href="/divinity/senzai.html">>>>/divinity/</a>'));
+		return;
+	}
 	else if (prefix == '>/w') {
 		dest = 'https://www.youtube.com/' + ref.slice(2);
 		linkClass = 'embed watch';
