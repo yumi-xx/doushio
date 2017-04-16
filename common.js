@@ -242,7 +242,7 @@ OS.red_string = function (ref) {
 	}
 	// A pleasant place
 	else if (ref == '>/senzai/') {
-		this.callback(safe('<a href="/divinity/senzai.html">>>>/divinity/</a>'));
+		this.callback(safe('<a href="/divinity/senzai.html">>>>/senzai/</a>'));
 		return;
 	}
 	else if (prefix == '>/w') {
