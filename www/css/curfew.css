@@ -1,15 +1,13 @@
 body {
-	background: black url('../divinity/back.jpg') no-repeat;
+	background: black url('../divinity/back.png') no-repeat;
 	background-size: 100%;
-	font-family: "MS Pゴシック", "MS PGothic", "Mona", "Hiragino Kaku Gothic Pro";
 	font-size: 12pt;
-	font-family: Arial;
+	font-family: UniversLight,sans-serif;
+	background-color: #f9f8fe;
 }
 div#countdown {
-	color: #000000;
 	margin-top: 100px;
 	text-align: center;
-
 }
 div#info {
 	display: block;
@@ -18,12 +16,20 @@ div#info {
         left: 5%;
 	max-width: 15%;
 	top:10px;
+	color: #000000;
 }
 a {
- 	color: #ff0000;
+ 	color: #ffffff;
         text-decoration: none;
 }
 a:hover {
         text-decoration: none;
         color: #d17c43;
+}
+body {
+	color: #ffffff;
+}
+@font-face {
+	font-family: "UniversLight";
+	src: url("/css/univers-light.ttf");
 }
