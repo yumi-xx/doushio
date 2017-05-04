@@ -16,7 +16,6 @@ function show_toolbox() {
 	];
 	if (IDENT.auth == 'Admin')
 		specs.push({name: 'Move', kind: 34});
-		specs.push({name: 'Ban', kind: 14});
 		specs.push({name: 'Panel', kind: 'panel'});
 	var $toolbox = $('<div/>', {id: 'toolbox', "class": 'mod'});
 
@@ -453,7 +452,7 @@ var PanelView = Backbone.View.extend({
 
 	renderUptime: function (model, s) {
 		var m = Math.floor(s / 60) % 60;
-		var h = Math.floor(s / 3600) % 60;
+		var h = Math.floor(s / 3600) % 24;
 		var d = Math.floor(s / (3600*24));
 		h = h ? h+'h' : '';
 		d = d ? d+'d' : '';
