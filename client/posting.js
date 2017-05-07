@@ -66,18 +66,7 @@ var vapor = 0, wombo = 0, eject = 0;
 
 function handle_shortcut(event) {
 	var k = event.which;
-	if (vapor < 0 || wombo < 0) {
-		if (event.shiftKey && k == [69,74,69,67,84,49][eject]) {
-			if (++eject >= 6) {
-				vapor = wombo = eject = 0;
-				ComposerView.prototype.word_filter = function (w) { return w; };
-				flash_bg('white');
-			}
-		}
-		else
-			eject = 0;
-	}
-	else if (event.shiftKey && k == 86) {
+	if (event.shiftKey && k == 86) {
 		if (++vapor > 10) {
 			vapor = -1;
 			if (postForm)
@@ -530,7 +519,8 @@ on_input: function (val) {
 	}
 	else {
 		var rev = val.split('').reverse().join('');
-		var m = rev.match(/^(\s*\S+\s+\S+)\s+(?=\S)/);
+		var reg = new RegExp('^(\\s*\\S+(\\s+\\S+){' + (config.WORDS_BEFORE_COMMIT-1) + '})\\s+(?=\\S)');
+		var m = rev.match(reg);
 		if (m)
 			lim = len - m[1].length;
 	}

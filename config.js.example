@@ -17,6 +17,7 @@ var config = {
 
 	REDIS_PORT: 6379,
 	READ_ONLY: false,
+	WORDS_BEFORE_COMMIT: 2,
 
 	BOARDS: ['moe', 'gar', 'meta', 'archive', 'staff', 'yu'],
 	DEFAULT_BOARD: 'moe',
