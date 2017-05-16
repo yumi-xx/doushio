@@ -36,6 +36,7 @@ optSpecs.push(option_inline_expansion);
 if (window.devicePixelRatio > 1)
 	optSpecs.push(option_high_res);
 optSpecs.push(option_thumbs);
+optSpecs.push(option_autocomplete);
 optSpecs.push(option_backlinks);
 optSpecs.push(option_reply_at_right);
 optSpecs.push(option_theme);
