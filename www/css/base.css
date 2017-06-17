@@ -329,11 +329,14 @@ article .hat {
 	padding-left: 1em;
 	text-decoration: none;
 }
+input {
+	border:none;
+	background-color:white;
+}
 #shortcuts {
 	margin-top: 1em;
 }
 #shortcuts input {
-	border: none;
 	width: 2em;
 	margin-right: 1em;
 }
