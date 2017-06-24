@@ -207,6 +207,16 @@ option_reply_at_right.id = 'replyright';
 option_reply_at_right.label = '[Reply] at right';
 option_reply_at_right.type = 'checkbox';
 
+/* AUTOCOMPLETE */
+
+function option_autocomplete(b) {
+	if (postForm)
+		postForm.model.set('autocomplete', b);
+}
+option_autocomplete.id = 'autocomplete';
+option_autocomplete.label = 'Auto-complete';
+option_autocomplete.type = 'checkbox';
+
 /* BACKLINKS */
 
 function option_backlinks(b) {
