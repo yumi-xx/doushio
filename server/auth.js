@@ -62,9 +62,10 @@ exports.login = function (req, resp) {
 				exports.set_cookie(req, resp, packet);
 			}
 		}
-		else
+		else {
 			winston.warn("SQL database " + config.MYSQL_DATABASE + "is not accessible");
 			return respond_error(resp, 'Could not access the database, please yell at the systems administrator!');
+		}
 	});
 	connection.end();
 }
