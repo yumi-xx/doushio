@@ -180,9 +180,7 @@ section #banner {
 	text-decoration: underline;
 }
 #sync.error {
-	position: fixed;
-	top: 12px;
-	right: 8px;
+	color: red;
 }
 figure {
 	display: block;
@@ -337,6 +335,17 @@ article .hat {
 	width: 2em;
 	margin-right: 1em;
 }
+input {
+	background-color: white;
+	border: 1px solid black;
+}
+/* Cleans borders for the persona button nicely */
+#name {
+	margin-bottom: -1px;
+}
+*:focus {
+	outline:none;
+}
 pre {
 	height: auto;
 	margin: 0;
@@ -425,4 +434,14 @@ blockquote.twitter-tweet > a {
 	display: block;
 	font-size: 14px;
 	text-decoration: none;
+}
+#mascot {
+}
+input#image {
+	height:19px;
+	font-size: 12px;
+	border:none;
+	padding-left:10px;
+	vertical-align:bottom;
+	background:none;
 }

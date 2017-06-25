@@ -120,13 +120,11 @@ options.on('change:lastn', function (model, lastN) {
 var themes = [
 	'moe',
 	'gar',
-	'mawaru',
-	'moon',
 	'ashita',
 	'console',
 	'tea',
-	'higan',
 	'ncsu',
+	'cs',
 ];
 
 function option_theme(theme) {

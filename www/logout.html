@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0">
 </head>
 <body>
-<h1 style="padding-bottom:30px;">howler staff login</h1>
+<h1 style="padding-bottom:30px;">howler staff logout</h1>
 <article id="1" style="width:30%;margin:auto;">
 	<header>
 	<b class="admin">Anonymous ## Admin</b>
@@ -15,10 +15,8 @@
 	</nav>
 	</header>
 	<blockquote style="text-align:center;padding-bottom:20px;"><h3></h3>
-	<form action="/login" method="GET">
-		<input type="text" placeholder="username" style="width:100%;margin-bottom:5px;" name="username" autofocus></input>
-		<input type="password" placeholder="password" style="width:100%;margin-bottom:5px;" name="password"></input>
-		<input style="float:right;" type="submit" value="log me in!"></input>
+	<form action="/logout" method="POST">
+		<input style="margin:auto;" type="submit" value="log me out!"></input>
 	</form>
 	</blockquote>
 	<video id="video" loop autoplay muted style="width:100%;border-radius:20px 20px 0px 0px;" onClick="if (this.muted) {this.muted = false} else {this.muted = true}">

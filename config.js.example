@@ -4,12 +4,14 @@ var config = {
 	DEBUG: true,
 	SECURE_SALT: "LALALALALALALALA", /* [A-Za-z0-9./]{16} */
 	SOCKET_PATH: '/hana',
+	// Useful for reverse proxying through nginx or apache
 	TRUST_X_FORWARDED_FOR: false,
 	SERVE_STATIC_FILES: false,
 	SERVE_IMAGES: false,
 	GZIP: false, /* not preferred; use nginx (or other)'s gzipping */
 	USE_WEBSOCKETS: true,
-	
+
+	// Where administrators and mods are listed
 	MYSQL_USER: "root",
 	MYSQL_PASS: "hackme",
 	MYSQL_DATABASE: "mysql_database",
@@ -27,6 +29,9 @@ var config = {
 	THREADS_PER_PAGE: 10,
 	ABBREVIATED_REPLIES: 5,
 	THREAD_LAST_N: 100,
+	// Times are in GMT, uncomment the hours that
+	// you want your board to be open and leave the
+	// other hours commented
 /*        CURFEW_BOARDS: [''],
 	CURFEW_HOURS: [
 		1,
@@ -64,10 +69,13 @@ var config = {
 	SUBJECT_MAX_LENGTH: 50,
 	EXCLUDE_REGEXP: /[\u2000-\u200f\u202a-\u202f\u205f-\u206f]+/g,
 	SAGE_ENABLED: true,
+	// Set this to enable the wordfilter list in client/posting.js
 	WORDFILTERS_ENABLED: false,
 
+	// For admin and mod logins
 	LOGIN_COOKIE_DOMAIN: 'example.com',
 	LOGIN_SESSION_TIME: 60*60*24*14,
+	// Weeb romanization of IP addresses
 	IP_MNEMONIC: true,
 
 	// API key with Youtube Data API v3 (browser) access

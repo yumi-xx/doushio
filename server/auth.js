@@ -8,7 +8,8 @@ var _ = require('../lib/underscore'),
     request = require('request'),
     winston = require('winston'),
     crypt = require('crypto'),
-    mysql = require('mysql');
+    mysql = require('mysql'),
+    fs = require('fs');
 
 function connect() {
 	return global.redis;
@@ -24,11 +25,8 @@ exports.login = function (req, resp) {
 	var packet = {ip: ip, user: user, date: Date.now()};
 	// Need to upgrade to POST sometime
 	if (!user || !password) {
-		resp.writeHead(200, {'Content-Type': 'text/html'});
-		resp.end('<!doctype html><title>Login</title><form method=GET>' +
-			'Username <input type="text" name="username" id="username" value="" maxlength="20" /></br>' +
-			'Password <input type="password" name="password" id="password" value="" maxlength="20" /> ' +
-			'<input type="submit" value="Login"/></form>');
+		resp.writeHead(302, {'Location':'/login.html'});
+		resp.end('Redirecting to login page. . .');
 		return;
 	}
 	var connection = mysql.createConnection({
@@ -37,8 +35,6 @@ exports.login = function (req, resp) {
 	password : config.MYSQL_PASS,
 	database : config.MYSQL_DATABASE
 	});
-	if (!user || !password)
-		return respond_error(resp, 'Invalid username or password.');
 	// Initialize the SQL Database
 	connection.connect();
 	// Prepare and execute a SQL query
@@ -51,7 +47,7 @@ exports.login = function (req, resp) {
 			// Kick out unauthenticated users
 			if (!rows[0] || hashedPassword != rows[0].password) {
 				winston.error("Login attempt by @" + user + " from " + ip);
-				return respond_error(resp, 'Check your privilege.');
+				return respond_error(resp, 'Invalid username or password');
 			}
 			// Log in administrators
 			if (rows[0].is_admin == "y") {
@@ -68,6 +64,7 @@ exports.login = function (req, resp) {
 		}
 		else
 			winston.warn("SQL database " + config.MYSQL_DATABASE + "is not accessible");
+			return respond_error(resp, 'Could not access the database, please yell at the systems administrator!');
 	});
 	connection.end();
 }
@@ -106,9 +103,8 @@ exports.check_cookie = function (cookie, callback) {
 
 exports.logout = function (req, resp) {
 	if (req.method != 'POST') {
-		resp.writeHead(200, {'Content-Type': 'text/html'});
-		resp.end('<!doctype html><title>Logout</title><form method=post>' +
-			'<input type=submit value=Logout></form>');
+		resp.writeHead(302, {'Location':'/logout.html'});
+		resp.end('Redirecting to logout page. . .');
 		return;
 	}
 	var r = connect();

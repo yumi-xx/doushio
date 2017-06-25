@@ -1,9 +1,7 @@
 a, blockquote a {
 	color: #3366BB;
-	text-decoration: none;
 }
 a:hover, .email b:hover {
-	text-decoration: none;
 	color: #d17c43;
 }
 article, aside, .pagination {
