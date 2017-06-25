@@ -1,12 +1,16 @@
 body {
-	background: black url('../divinity/back.png') no-repeat;
-	background-size: 100%;
-	font-size: 12pt;
+/*	background: black url('../divinity/back.png') no-repeat;
+	background-size: 100%;*/
 	font-family: UniversLight,sans-serif;
-	background-color: #f9f8fe;
+}
+#header {
+	padding-bottom: 10px;
+}
+article {
+	width:40%;
+	margin:auto;
 }
 div#countdown {
-	margin-top: 100px;
 	text-align: center;
 }
 div#info {
@@ -18,18 +22,26 @@ div#info {
 	top:10px;
 	color: #000000;
 }
-a {
- 	color: #ffffff;
-        text-decoration: none;
+.play{background: url('play.png') ;}
+.pause{background: url('pause.png') ;}
+#pButton{
+	height:30px; 
+	width: 30px;
+	border: none;
+	background-size: 50% 50%;
+	background-repeat: no-repeat;
+	background-position: center;
 }
-a:hover {
-        text-decoration: none;
-        color: #d17c43;
-}
-body {
-	color: #ffffff;
+#pButton:focus {
+	outline:0;
+	border-color: inherit;
+	-webkit-box-shadow:none;
+	box-shadow:none;
 }
 @font-face {
 	font-family: "UniversLight";
 	src: url("/css/univers-light.ttf");
+}
+blockquote {
+	text-align:center;
 }
