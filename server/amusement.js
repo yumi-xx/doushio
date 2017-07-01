@@ -41,6 +41,9 @@ function inline_dice(post, dice) {
 		post.dice = dice.substring(1, dice.length - 1);
 	}
 }
+exports.senzai = function(req, resp) {
+	var src = fs.readFileSync('tmpl/senzai.html', 'UTF-8');
+};
 
 hooks.hook('attachToPost', function (attached, cb) {
 	var new_dice = attached.extra.new_dice;

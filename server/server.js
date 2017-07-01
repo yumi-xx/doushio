@@ -243,9 +243,11 @@ if (config.DEBUG) {
 else {
 	/* Production login endpoint */
 	web.route_get(/^\/login$/, auth.login);
+	web.route_post(/^\/login$/, auth.login);
 }
 web.route_get(/^\/logout$/, auth.logout);
 web.route_post(/^\/logout$/, auth.logout);
+web.route_get(/^\/senzai$/, amusement.senzai);
 
 function write_mod_js(resp, ident) {
 	if (!RES.modJs) {

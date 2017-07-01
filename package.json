@@ -18,18 +18,18 @@
 		"start": "node server/server.js"
 	},
 	"dependencies": {
-		"async": "2.1.4",
-		"formidable": "1.0.17",
-		"minimist": "1.2.0",
-		"mysql": "2.13.0",
-		"nan": "2.5.0",
-		"recaptcha": "1.2.1",
-		"redis": "2.6.3",
-		"request": "2.79",
-		"sockjs": "0.3.18",
+		"async": "^2.5.0",
+		"formidable": "^1.1.1",
+		"minimist": "^1.2.0",
+		"mysql": "^2.13.0",
+		"nan": "^2.6.2",
+		"recaptcha": "^1.2.1",
+		"redis": "^2.7.1",
+		"request": "^2.81.0",
+		"sockjs": "^0.3.18",
 		"tmp": "0.0.31",
-		"uglify-js": "2.7.5",
-		"winston": "2.3.0"
+		"uglify-js": "^2.8.29",
+		"winston": "^2.3.1"
 	},
 	"optionalDependencies": {
 		"node-expat": "2.3.15",

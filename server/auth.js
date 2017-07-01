@@ -83,6 +83,9 @@ exports.login = function (req, resp) {
 		db.end();
 	});
 }
+exports.logout = function(req, resp) {
+
+}
 
 exports.set_cookie = function (req, resp, info) {
 	var pass = random_str();
@@ -118,8 +121,13 @@ exports.check_cookie = function (cookie, callback) {
 
 exports.logout = function (req, resp) {
 	if (req.method != 'POST') {
-		resp.writeHead(302, {'Location':'/logout.html'});
-		resp.end('Redirecting to logout page. . .');
+		fs.readFile('tmpl/logout.html', 'UTF-8', function (err, lines) {
+			if (err) {
+				return respond_error(resp, 'Logout page is disappeared!');
+			}
+			resp.write(lines);
+			resp.end();
+		});
 		return;
 	}
 	var r = connect();
