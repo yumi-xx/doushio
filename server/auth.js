@@ -1,73 +1,87 @@
 var _ = require('../lib/underscore'),
-    common = require('../common'),
-    config = require('../config'),
-    crypto = require('crypto'),
-    formidable = require('formidable'),
-    querystring = require('querystring'),
-    RES = require('./state').resources,
-    request = require('request'),
-    winston = require('winston'),
-    crypt = require('crypto'),
-    mysql = require('mysql'),
-    fs = require('fs');
+	common = require('../common'),
+	config = require('../config'),
+	crypto = require('crypto'),
+	formidable = require('formidable'),
+	querystring = require('querystring'),
+	RES = require('./state').resources,
+	request = require('request'),
+	winston = require('winston'),
+	mysql = require('mysql'),
+	fs = require('fs'),
+	// Soon for password hashing against /etc/passwd or a DB
+	bcrypt = require('bcrypt-pbkdf');
 
 function connect() {
 	return global.redis;
 }
 
-// Logs in users who make a query ?username=USER&password=PASS
+// Logs in users who make a POST to the login page
 // Upgraded to use a SQL database
 exports.login = function (req, resp) {
-	var ip = req.ident.ip;
-	var user = req.query.username;
-	var password = req.query.password;
-	var ip = req.ident.ip;
-	var packet = {ip: ip, user: user, date: Date.now()};
-	// Need to upgrade to POST sometime
-	if (!user || !password) {
-		resp.writeHead(302, {'Location':'/login.html'});
-		resp.end('Redirecting to login page. . .');
+	// Has the user made an auth attempt?
+	if (req.method.toLowerCase() != 'post') {
+		fs.readFile('tmpl/login.html', 'UTF-8', function (err, lines) {
+			if (err) {
+				return respond_error(resp, 'Login page is disappeared!');
+			}
+			resp.write(lines);
+			resp.end();
+		});
 		return;
 	}
-	var connection = mysql.createConnection({
-	host     : 'localhost',
-	user     : config.MYSQL_USER,
-	password : config.MYSQL_PASS,
-	database : config.MYSQL_DATABASE
+	var form = new formidable.IncomingForm();
+	form.parse(req, function(err, fields, files) {
+		var ip = req.ident.ip;
+		var user = fields.username;
+		var password = fields.password;
+		var ip = req.ident.ip;
+		var packet = {ip: ip, user: user, date: Date.now()};
+		// Construct a sql query to pull out user information
+		var query = 'SELECT password,is_admin,is_mod FROM '
+			+ config.MYSQL_TABLE + ' WHERE username="' + user + '"';
+
+		var db = mysql.createConnection({
+		host     : 'localhost',
+		user     : config.MYSQL_USER,
+		password : config.MYSQL_PASS,
+		database : config.MYSQL_DATABASE
+		});
+		// Initialize the SQL Database
+		db.connect();
+		// Prepare and execute a SQL query
+		// Results of the SQL query are put in rows[0] (assuming unique usernames)
+		db.query(query, function(err,rows) {
+			if (!err) {
+				// Compare the gotten password with the hashed password in the MYSQL table
+				// NEEDS revision to verify using node module bcrypt-pbkdf
+				var sha = crypto.createHash('sha512').update(password);
+				var hashedPassword = sha.digest('hex');
+				// Kick out unauthenticated users
+				if (!rows[0] || hashedPassword != rows[0].password) {
+					winston.error("Login attempt by @" + user + " from " + ip);
+					return respond_error(resp, 'Invalid username or password');
+				}
+				// Log in administrators
+				if (rows[0].is_admin == "y") {
+					winston.info(user + " logging in as admin from " + ip);
+					packet.auth = 'Admin';
+					exports.set_cookie(req, resp, packet);
+				}
+				// Log in moderators
+				else if (rows[0].is_mod == "y") {
+					winston.info(user + " logging in as moderator from " + ip);
+					packet.auth = 'Moderator';
+					exports.set_cookie(req, resp, packet);
+				}
+			}
+			else {
+				winston.warn("SQL database " + config.MYSQL_DATABASE + " is not accessible");
+				return respond_error(resp, 'Could not access the database!');
+			}
+		});
+		db.end();
 	});
-	// Initialize the SQL Database
-	connection.connect();
-	// Prepare and execute a SQL query
-	// Results of the SQL query are put in rows[0] (assuming unique usernames)
-	connection.query('SELECT password,is_admin,is_mod FROM ' + config.MYSQL_TABLE + ' WHERE username="' + user + '"', function(err,rows) {
-		if (!err) {
-			// Compare the gotten password with the hashed password in the MYSQL table
-			var sha = crypto.createHash('sha512').update(password);
-			var hashedPassword = sha.digest('hex');
-			// Kick out unauthenticated users
-			if (!rows[0] || hashedPassword != rows[0].password) {
-				winston.error("Login attempt by @" + user + " from " + ip);
-				return respond_error(resp, 'Invalid username or password');
-			}
-			// Log in administrators
-			if (rows[0].is_admin == "y") {
-				winston.info("@" + user + " logging in as admin from " + ip);
-				packet.auth = 'Admin';
-				exports.set_cookie(req, resp, packet);
-			}
-			// Log in moderators
-			else if (rows[0].is_mod == "y") {
-				winston.info("@" + user + " logging in as moderator from " + ip);
-				packet.auth = 'Moderator';
-				exports.set_cookie(req, resp, packet);
-			}
-		}
-		else {
-			winston.warn("SQL database " + config.MYSQL_DATABASE + "is not accessible");
-			return respond_error(resp, 'Could not access the database, please yell at the systems administrator!');
-		}
-	});
-	connection.end();
 }
 
 exports.set_cookie = function (req, resp, info) {
