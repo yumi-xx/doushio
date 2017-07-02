@@ -335,6 +335,17 @@ function render_500(resp) {
 }
 exports.render_500 = render_500;
 
+exports.rules = function(req, resp) {
+	fs.readFile('www/divinity/rules.html', 'utf-8', function (err, lines) {
+		if (err) {
+			resp.end();
+			return;
+		}
+		resp.write(lines);
+		resp.end();
+	});
+};
+
 function slow_request(req, resp) {
 	var n = Math.floor(1000 + Math.random() * 500);
 	if (Math.random() < 0.1)

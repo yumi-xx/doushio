@@ -247,7 +247,7 @@ else {
 }
 web.route_get(/^\/logout$/, auth.logout);
 web.route_post(/^\/logout$/, auth.logout);
-web.route_get(/^\/senzai$/, amusement.senzai);
+web.route_get(/^\/rules$/, web.rules);
 
 function write_mod_js(resp, ident) {
 	if (!RES.modJs) {

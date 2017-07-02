@@ -230,19 +230,13 @@ OS.red_string = function (ref) {
 	var dest, linkClass;
 	// Handle board references
 	if (config.BOARDS.indexOf(ref.slice(2, ref.length-1)) >= 0) {
-
 		var board = ref.slice(2, ref.length-1);
 		this.tamashii(board);
 		return;
 	}
 	// Pouting machine functionality, show off the rules page!
-	else if (ref == '>/divinity/') {
-		this.callback(safe('<a href="/divinity/index.html">>>>/divinity/</a>'));
-		return;
-	}
-	// A pleasant place
-	else if (ref == '>/senzai/') {
-		this.callback(safe('<a href="/divinity/senzai.html">>>>/senzai/</a>'));
+	else if (ref == '>/rules/') {
+		this.callback(safe('<a href="/rules">>>>/rules/</a>'));
 		return;
 	}
 	else if (prefix == '>/w') {
