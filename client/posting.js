@@ -62,22 +62,8 @@ $DOC.on('click', 'aside a', _.wrap(function () {
 
 $DOC.on('keydown', handle_shortcut);
 
-var vapor = 0, wombo = 0, eject = 0;
-
 function handle_shortcut(event) {
 	var k = event.which;
-	if (event.shiftKey && k == 86) {
-		if (++vapor > 10) {
-			vapor = -1;
-			if (postForm)
-				postForm.$input.val('');
-			flash_bg('#f98aa5');
-			event.stopImmediatePropagation();
-			event.preventDefault();
-		}
-	}
-	else
-		vapor = wombo = 0;
 
 	if (!event.altKey)
 		return;
@@ -408,7 +394,7 @@ on_key_down: function (event) {
 		var val = this.$input.val();
 		val = val.slice(0, input.selectionStart) + c +
 				val.slice(input.selectionEnd);
-		if (vapor >= 0 || c == '\n')
+		if (c == '\n')
 			this.on_input(val);
 		break;
 	default:
@@ -484,21 +470,6 @@ on_input: function (val) {
 			end -= diff;
 		}
 	}
-	if (vapor < 0) {
-		if (!ward_len) {
-			// may have already converted from URL to >>ref, ward that too
-			var m = val.match(ref_re);
-			if (m) {
-				ward = m.index;
-				ward_len = m[0].length;
-			}
-		}
-		var vaped = this.vaporize(val, ward, ward+ward_len);
-		if (vaped != val) {
-			val = vaped;
-			changed = true;
-		}
-	}
 	if (changed)
 		$input.val(val);
 
@@ -512,10 +483,6 @@ on_input: function (val) {
 		$input.val(val);
 		if (this.model.get('sentAllocRequest') || /[^ ]/.test(ok))
 			this.commit(ok + '\n');
-	}
-	else if (vapor < 0 && !ward_len) {
-		if (len > 3)
-			lim = len - 3;
 	}
 	else {
 		var rev = val.split('').reverse().join('');
@@ -541,21 +508,6 @@ on_input: function (val) {
 	this.resize_input(val);
 },
 
-vaporize: function (text, ward_start, ward_end) {
-	var aesthetic = '';
-	for (var i = 0; i < text.length; i++) {
-		var c = text.charCodeAt(i);
-		if (i >= ward_start && i < ward_end) {
-		}
-		else if (c > 32 && c < 127)
-			c += 0xfee0;
-		else if (c == 32)
-			c = 0x3000;
-		aesthetic += String.fromCharCode(c);
-	}
-	return aesthetic;
-},
-
 // When passed a list of words, this function returns the filtered version
 word_filter: function (words) {
 	return words.replace(/\w+/g, function (orig) {
@@ -564,10 +516,7 @@ word_filter: function (words) {
 			'filters': 'improves',
 			'filtering': 'improving',
 			'filtered': 'improved',
-			'doushio': 'どうしお',
-			'anime': 'アニメ',
-			'weaboo': 'gaijin',
-			'weaboos': 'gaijin',
+			'anime': 'dragon ball z',
 			'mad': '［ＭＡＤ］',
 			'angry': '［ＭＡＤ］',
 			'enrage': '［ＭＡＤ］',
@@ -576,22 +525,19 @@ word_filter: function (words) {
 			'touhou': '2hu',
 			'nigger': 'roody-poo',
 			'niggers': 'roody-poos',
-			'nigga': 'roody-poo',
-			'niggas': 'roody-poos',
-			'nig': 'roody-poo',
 			'faggot': 'candy-ass',
 			'fags': 'candy-asses',
-			'cuck': 'A H H H HH H H F U C K I L OV E DICKS',
-			'cucks': 'I  CANNOT STOP JACKING IT',
+			'cuck': 'friend',
+			'cucks': 'friends',
 			'smh': 'baka',
 			'tbh': 'desu',
 			'fam': 'senpai',
-			'pajeet': 'hard-working immigrant',
-			'pajeets': 'hard-working immigrants',
+			'pajeet': 'friend',
+			'pajeets': 'friends',
 			'jews': 'arabs',
 			'arabs': 'jews',
-			'overwatch': 'OVERMAN',
-			'maga': 'Politics do NOT belong on this board'
+			'overwatch': 'overman',
+			'weekend': 'weeknd',
                 }[orig.toLowerCase()];
 		if (word && typeof word === 'string')
 			return word;
