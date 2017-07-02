@@ -484,7 +484,7 @@ on_input: function (val) {
 		if (this.model.get('sentAllocRequest') || /[^ ]/.test(ok))
 			this.commit(ok + '\n');
 	}
-	else {
+	else if (config.WORDS_BEFORE_COMMIT) {
 		var rev = val.split('').reverse().join('');
 		var reg = new RegExp('^(\\s*\\S+(\\s+\\S+){' + (config.WORDS_BEFORE_COMMIT-1) + '})\\s+(?=\\S)');
 		var m = rev.match(reg);

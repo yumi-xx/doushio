@@ -19,6 +19,9 @@ var config = {
 
 	REDIS_PORT: 6379,
 	READ_ONLY: false,
+	// After typing this many words, commit earlier changes to the
+	// server
+	// If set to zero, your post will only commit on newlines
 	WORDS_BEFORE_COMMIT: 2,
 
 	BOARDS: ['moe', 'gar', 'meta', 'archive', 'staff', 'yu'],
