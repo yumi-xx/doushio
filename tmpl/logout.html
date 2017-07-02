@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <HTML>
 <head>
+	<link rel="stylesheet" type="text/css" href="/css/login.css">
 	<link rel="stylesheet" type="text/css" href="/css/ncsu.css">
-	<link rel="stylesheet" type="text/css" href="/css/base.css">
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0">
 </head>
 <body>
-<h1 style="padding-bottom:30px;">howler staff logout</h1>
-<article id="1" style="width:30%;margin:auto;">
+<div id="title">
+	<h1>staff sign-out</h1>
+</div>
+<article id="1">
 	<header>
 	<b class="admin">Anonymous ## Admin</b>
 	<nav style="display:inline;">
 		<a href="#">No. 1</a>
 	</nav>
 	</header>
-	<blockquote style="text-align:center;padding-bottom:20px;"><h3></h3>
+	<blockquote>
 	<form action="/logout" method="POST">
-		<input style="margin:auto;" type="submit" value="log me out!"></input>
+		<input type="submit" style="margin:auto;" value="log me out!"></input>
 	</form>
 	</blockquote>
-	<video id="video" loop autoplay muted style="width:100%;border-radius:20px 20px 0px 0px;" onClick="if (this.muted) {this.muted = false} else {this.muted = true}">
+	<video id="splash" loop autoplay muted onClick="if (this.muted) {this.muted = false} else {this.muted = true}">
 		<source src="/css/login.webm">
 	</video>
 <span style="text-align:center;display:block;">The material located at this site is <span style="font-size:50%;">not</span> endorsed, sponsored or provided by or on behalf of North Carolina State University.</span>

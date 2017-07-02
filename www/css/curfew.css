@@ -1,47 +1,59 @@
 body {
-/*	background: black url('../divinity/back.png') no-repeat;
-	background-size: 100%;*/
 	font-family: UniversLight,sans-serif;
 }
-#header {
-	padding-bottom: 10px;
+a {
+	border: none;
+	text-decoration: underline;
+}
+a.nope, a.nope:hover {
+	color: inherit;
+	text-decoration: none;
 }
 article {
-	width:40%;
-	margin:auto;
-}
-div#countdown {
-	text-align: center;
-}
-div#info {
+	margin: auto;
+	width: 80%;
+	max-width: 500px;
+	padding: 4px 10px;
 	display: block;
-        position: absolute;
-	text-align: center;
-        left: 5%;
-	max-width: 15%;
-	top:10px;
-	color: #000000;
+	overflow:auto;
+}
+blockquote {
+	display: block;
+	overflow:hidden;
+}
+video {
+	display: block;
+	margin: auto;
+	width: 90%;
+	border-radius: 10px 10px 0px 0px;
+}
+header nav a {
+	text-decoration: none;
+}
+input {
+	background-color: white;
+	border: 1px solid black;
+}
+input[type="text"], input[type="password"] {
+	display:block;
+	box-sizing: border-box;
+	width: 100%;
+	margin-bottom: 10px;
+}
+input[type="submit"] {
+	display:block;
+}
+form {
+	margin: auto;
+	width: 100%;
+	max-width: 300px;
+}
+#title {
+	text-align:center;
 }
 .play{background: url('play.png') ;}
 .pause{background: url('pause.png') ;}
-#pButton{
-	height:30px; 
-	width: 30px;
-	border: none;
-	background-size: 50% 50%;
-	background-repeat: no-repeat;
-	background-position: center;
-}
-#pButton:focus {
-	outline:0;
-	border-color: inherit;
-	-webkit-box-shadow:none;
-	box-shadow:none;
-}
 @font-face {
 	font-family: "UniversLight";
 	src: url("/css/univers-light.ttf");
-}
-blockquote {
-	text-align:center;
 }

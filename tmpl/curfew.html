@@ -2,13 +2,14 @@
 <HTML>
 <head>
 	<link rel="stylesheet" type="text/css" href="/css/ncsu.css">
-	<link rel="stylesheet" type="text/css" href="/css/base.css">
 	<link rel="stylesheet" type="text/css" href="/css/curfew.css">
 	<title>$BOARD</title>
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0">
 </head>
 <body>
+<div id="title">
 	<div id="countdown"></div>
+</div>
 <article id="1">
 	<header>
 	<b class="admin">Anonymous ## Admin</b>
@@ -19,45 +20,14 @@
 	<blockquote>
 	Come join our IRC in the meantime: bigmike.sne.jp:6667 /join #bigtown</br>
 	<a href="mailto:webmaster@howler.us.to">webmaster@howler.us.to</a> for help/questions</br>
-	<div style="text-align:center;"><button id="pButton" class="play"></button></div>
+	<div style="text-align:center;"></div>
 	</blockquote>
-	<audio id="music" preload="true" loop>
-		<source src="tiden_flyver.opus">
-	</audio>
-	<video id="video" loop muted style="width:100%;border-radius:20px 20px 0px 0px;">
+	<video id="video" autoplay loop muted>
 		<source src="/css/curfew.webm">
 	</video>
 <span style="text-align:center;display:block;">The material located at this site is <span style="font-size:50%;">not</span> endorsed, sponsored or provided by or on behalf of North Carolina State University.</span>
 </article>
-
 </body>
-<script>
-var music = document.getElementById('music'); // id for audio element
-var video = document.getElementById('video');
-var pButton = document.getElementById('pButton'); // play button
-
-// play button event listenter
-pButton.addEventListener("click", play);
-
-//Play and Pause
-function play() {
-    // start music
-    if (music.paused) {
-        music.play();
-	video.play();
-        // remove play, add pause
-        pButton.className = "";
-        pButton.className = "pause";
-    } else { // pause music
-        music.pause();
-	video.pause();
-        // remove pause, add play
-        pButton.className = "";
-        pButton.className = "play";
-    }
-}
-play();
-</script>
 </HTML>
 <script>var END = $END;</script>
 <script src="{{MEDIA_URL}}js/jquery-1.10.2.min.js"></script>

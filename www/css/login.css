@@ -1,0 +1,50 @@
+a {
+	border: none;
+	text-decoration: underline;
+}
+a.nope, a.nope:hover {
+	color: inherit;
+	text-decoration: none;
+}
+article {
+	margin: auto;
+	width: 80%;
+	max-width: 500px;
+	padding: 4px 10px;
+	display: block;
+	overflow:auto;
+}
+blockquote {
+	display: block;
+	overflow:hidden;
+}
+#splash {
+	display: block;
+	margin: auto;
+	width: 90%;
+	border-radius: 10px 10px 0px 0px;
+}
+header nav a {
+	text-decoration: none;
+}
+input {
+	background-color: white;
+	border: 1px solid black;
+}
+input[type="text"], input[type="password"] {
+	display:block;
+	box-sizing: border-box;
+	width: 100%;
+	margin-bottom: 10px;
+}
+input[type="submit"] {
+	display:block;
+}
+form {
+	margin: auto;
+	width: 100%;
+	max-width: 300px;
+}
+#title {
+	text-align:center;
+}
