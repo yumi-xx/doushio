@@ -9,8 +9,7 @@ var _ = require('../lib/underscore'),
 	winston = require('winston'),
 	mysql = require('mysql'),
 	fs = require('fs'),
-	// Soon for password hashing against /etc/passwd or a DB
-	bcrypt = require('bcrypt-pbkdf');
+	crypt = require('crypt3');
 
 function connect() {
 	return global.redis;
@@ -23,7 +22,8 @@ exports.login = function (req, resp) {
 	if (req.method.toLowerCase() != 'post') {
 		fs.readFile('tmpl/login.html', 'UTF-8', function (err, lines) {
 			if (err) {
-				return respond_error(resp, 'Login page is disappeared!');
+				resp.end();
+				return;
 			}
 			resp.write(lines);
 			resp.end();
@@ -37,48 +37,52 @@ exports.login = function (req, resp) {
 		var password = fields.password;
 		var ip = req.ident.ip;
 		var packet = {ip: ip, user: user, date: Date.now()};
-		// Construct a sql query to pull out user information
-		var query = 'SELECT password,is_admin,is_mod FROM '
-			+ config.MYSQL_TABLE + ' WHERE username="' + user + '"';
+		// Substitute user information into the sql query
+		var query = config.MYSQL_QUERY;
+		query = query.replace('%s', user);
 
+		// Initialize the SQL connection
 		var db = mysql.createConnection({
-		host     : 'localhost',
+		host     : config.MYSQL_HOST,
 		user     : config.MYSQL_USER,
 		password : config.MYSQL_PASS,
 		database : config.MYSQL_DATABASE
 		});
-		// Initialize the SQL Database
 		db.connect();
 		// Prepare and execute a SQL query
 		// Results of the SQL query are put in rows[0] (assuming unique usernames)
 		db.query(query, function(err,rows) {
-			if (!err) {
-				// Compare the gotten password with the hashed password in the MYSQL table
-				// NEEDS revision to verify using node module bcrypt-pbkdf
-				var sha = crypto.createHash('sha512').update(password);
-				var hashedPassword = sha.digest('hex');
+			if (err) {
+				winston.warn("Had some trouble querying " + config.MYSQL_DATABASE);
+				return respond_error(resp, 'Could not access the database!');
+			}
+			if (!rows[0]) {
+				winston.error("Failed login attempt by invalid user " + user + " from " + ip);
+				// Do not tell the user that they hit an invalid username
+				return respond_error(resp, 'Invalid username or password');
+			}
+			// Compare the gotten password with the hashed password in the MYSQL table
+			crypt(password, rows[0].password, function (err, value) {
+				var res = (rows[0].password == value);
 				// Kick out unauthenticated users
-				if (!rows[0] || hashedPassword != rows[0].password) {
-					winston.error("Login attempt by @" + user + " from " + ip);
+				if (!res) {
+				// Do not tell the user that they hit a valid username
+					winston.error("Failed login attempt by " + user + " from " + ip);
 					return respond_error(resp, 'Invalid username or password');
 				}
 				// Log in administrators
-				if (rows[0].is_admin == "y") {
+				if (rows[0].group == "admin") {
 					winston.info(user + " logging in as admin from " + ip);
 					packet.auth = 'Admin';
 					exports.set_cookie(req, resp, packet);
 				}
 				// Log in moderators
-				else if (rows[0].is_mod == "y") {
+				else if (rows[0].group == "mod") {
 					winston.info(user + " logging in as moderator from " + ip);
 					packet.auth = 'Moderator';
 					exports.set_cookie(req, resp, packet);
 				}
-			}
-			else {
-				winston.warn("SQL database " + config.MYSQL_DATABASE + " is not accessible");
-				return respond_error(resp, 'Could not access the database!');
-			}
+			});
 		});
 		db.end();
 	});

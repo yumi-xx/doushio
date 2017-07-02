@@ -7,11 +7,11 @@
 		"imageboard",
 		"redis"
 	],
-	"homepage": "https://github.com/lalcmellkmal/doushio",
+	"homepage": "https://bigmike.sne.jp/gitphp",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/lalcmellkmal/doushio.git"
+		"url": "https://bigmike.sne.jp/gitphp"
 	},
 	"scripts": {
 		"postinstall": "make",
@@ -19,6 +19,7 @@
 	},
 	"dependencies": {
 		"async": "^2.5.0",
+		"crypt3": "^1.0.0",
 		"formidable": "^1.1.1",
 		"minimist": "^1.2.0",
 		"mysql": "^2.13.0",
