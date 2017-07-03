@@ -53,6 +53,7 @@ exports.login = function (req, resp) {
 		// Results of the SQL query are put in rows[0] (assuming unique usernames)
 		db.query(query, function(err,rows) {
 			if (err) {
+				winston.warn(query);
 				winston.warn("Had some trouble querying " + config.MYSQL_DATABASE);
 				return respond_error(resp, 'Could not access the database!');
 			}
