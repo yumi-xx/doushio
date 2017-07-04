@@ -247,7 +247,7 @@ else {
 }
 web.route_get(/^\/logout$/, auth.logout);
 web.route_post(/^\/logout$/, auth.logout);
-web.route_get(/^\/rules$/, web.rules);
+web.route_get(/^\/rules$/, web.render_rules);
 
 function write_mod_js(resp, ident) {
 	if (!RES.modJs) {

@@ -110,6 +110,7 @@ function read_templates(cb) {
 		logout: read('tmpl', 'logout.html'),
 		notFound: read('www', '404.html'),
 		serverError: read('www', '50x.html'),
+		rules: read('tmpl', 'rules.html'),
 	}, cb);
 }
 
@@ -133,6 +134,7 @@ function expand_templates(res) {
 		logoutTmpl: tmpl(res.logout).tmpl,
 		notFoundHtml: res.notFound,
 		serverErrorHtml: res.serverError,
+		rulesTmpl: tmpl(res.rules).tmpl,
 	};
 
 	var index = tmpl(res.index);

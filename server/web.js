@@ -3,6 +3,7 @@ var _ = require('../lib/underscore'),
     caps = require('./caps'),
     config = require('../config'),
     formidable = require('formidable'),
+    fs = require('fs'),
     hooks = require('../hooks'),
     Stream = require('stream'),
     url_parse = require('url').parse,
@@ -17,7 +18,20 @@ var escape = require('../common').escape_html;
 var routes = [];
 var resources = [];
 
-var server = require('http').createServer(function (req, resp) {
+var server;
+if (config.USE_HTTPS) {
+	var credentials = {key: fs.readFileSync('certs/howler.key'),
+		cert: fs.readFileSync('certs/howler.crt')};
+	server = require('tls').createServer(credentials, function (s) {
+		s.write('HTTPS not yet implemented');
+		s.pipe(s);
+	});
+}
+else {
+	server = require('http').createServer(receive_request);
+}
+
+function receive_request(req, resp) {
 	var ip = req.connection.remoteAddress;
 	if (config.TRUST_X_FORWARDED_FOR)
 		ip = parse_forwarded_for(req.headers['x-forwarded-for']) || ip;
@@ -35,9 +49,8 @@ var server = require('http').createServer(function (req, resp) {
 	if (req.ident.slow)
 		return slow_request(req, resp);
 	handle_request(req, resp);
-});
+}
 exports.server = server;
-
 function handle_request(req, resp) {
 	var method = req.method.toLowerCase();
 	var parsed = url_parse(req.url, true);
@@ -320,12 +333,21 @@ exports.serverErrorHtml = preamble + '<title>500</title>Server error';
 hooks.hook('reloadResources', function (res, cb) {
 	exports.notFoundHtml = res.notFoundHtml;
 	exports.serverErrorHtml = res.serverErrorHtml;
+	exports.rulesTmpl = res.rulesTmpl;
 	cb(null);
 });
 
 function render_404(resp) {
-	resp.writeHead(404, noCacheHeaders);
-	resp.end(exports.notFoundHtml);
+	fs.readFile('www/404.html', 'UTF-8', function (err, lines) {
+		if (err) {
+			resp.end();
+			return;
+		}
+		resp.writeHead(404, noCacheHeaders);
+		resp.end(lines);
+	});
+
+//	resp.end(exports.notFoundHtml);
 };
 exports.render_404 = render_404;
 
@@ -335,16 +357,11 @@ function render_500(resp) {
 }
 exports.render_500 = render_500;
 
-exports.rules = function(req, resp) {
-	fs.readFile('www/divinity/rules.html', 'utf-8', function (err, lines) {
-		if (err) {
-			resp.end();
-			return;
-		}
-		resp.write(lines);
-		resp.end();
-	});
+function render_rules(req, resp) {
+	resp.writeHead(200);
+	resp.end(exports.rulesTmpl[0]);
 };
+exports.render_rules = render_rules;
 
 function slow_request(req, resp) {
 	var n = Math.floor(1000 + Math.random() * 500);
