@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <HTML>
 <head>
-	<link rel="stylesheet" type="text/css" href="/css/login.css">
-	<link rel="stylesheet" type="text/css" href="/css/ncsu.css">
+	<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/login.css">
+	<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/ncsu.css">
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0">
 </head>
 <body>
@@ -17,12 +17,13 @@
 	</nav>
 	</header>
 	<blockquote>
+	<div style="text-align:center;">Are you sure you want to logout, $USER?</div>
 	<form action="/logout" method="POST">
 		<input type="submit" style="margin:auto;" value="log me out!"></input>
 	</form>
 	</blockquote>
 	<video id="splash" loop autoplay muted onClick="if (this.muted) {this.muted = false} else {this.muted = true}">
-		<source src="/css/login.webm">
+		<source src="{{MEDIA_URL}}css/login.webm">
 	</video>
 <span style="text-align:center;display:block;">The material located at this site is <span style="font-size:50%;">not</span> endorsed, sponsored or provided by or on behalf of North Carolina State University.</span>
 </article>

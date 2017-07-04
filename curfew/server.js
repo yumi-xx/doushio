@@ -19,6 +19,8 @@ hooks.hook_sync('boardDiversion', function (info) {
 	if (under_curfew(info.ident, info.board)) {
 		info.diverted = true;
 		var resp = info.resp;
+		// RES.curefewTmpl is chunked into parts by $[A-Z]+
+		// \$[A-Z]+ (so a word like $TITLE or anything)
 		resp.writeHead(200, web.noCacheHeaders);
 		resp.write(RES.curfewTmpl[0]);
 		resp.write('/' + info.board + '/');

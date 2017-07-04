@@ -20,14 +20,9 @@ function connect() {
 exports.login = function (req, resp) {
 	// Has the user made an auth attempt?
 	if (req.method.toLowerCase() != 'post') {
-		fs.readFile('tmpl/login.html', 'UTF-8', function (err, lines) {
-			if (err) {
-				resp.end();
-				return;
-			}
-			resp.write(lines);
-			resp.end();
-		});
+		// Write out the login template, chunked by any
+		// $VARIABLES (we have none here however)
+		resp.end(RES.loginTmpl[0]);
 		return;
 	}
 	var form = new formidable.IncomingForm();
@@ -37,9 +32,6 @@ exports.login = function (req, resp) {
 		var password = fields.password;
 		var ip = req.ident.ip;
 		var packet = {ip: ip, user: user, date: Date.now()};
-		// Substitute user information into the sql query
-		var query = config.MYSQL_QUERY;
-		query = query.replace('%s', user);
 
 		// Initialize the SQL connection
 		var db = mysql.createConnection({
@@ -49,6 +41,10 @@ exports.login = function (req, resp) {
 		database : config.MYSQL_DATABASE
 		});
 		db.connect();
+
+		// Substitute user information into the sql query
+		var query = config.MYSQL_QUERY;
+		query = query.replace('%s', db.escape(user));
 		// Prepare and execute a SQL query
 		// Results of the SQL query are put in rows[0] (assuming unique usernames)
 		db.query(query, function(err,rows) {
@@ -125,22 +121,20 @@ exports.check_cookie = function (cookie, callback) {
 };
 
 exports.logout = function (req, resp) {
-	if (req.method != 'POST') {
-		fs.readFile('tmpl/logout.html', 'UTF-8', function (err, lines) {
-			if (err) {
-				return respond_error(resp, 'Logout page is disappeared!');
-			}
-			resp.write(lines);
-			resp.end();
-		});
-		return;
-	}
-	var r = connect();
 	var cookie = extract_login_cookie(req.cookies);
 	if (!cookie) {
 		console.log('no cookie');
 		return respond_error(resp, "No login cookie for logout.");
 	}
+	if (req.method != 'POST') {
+		// Write out the login template, chunked by any
+		// $VARIABLES (we have none here however)
+		resp.write(RES.logoutTmpl[0]);
+		resp.write(req.ident.user);
+		resp.end(RES.logoutTmpl[1]);
+		return;
+	}
+	var r = connect();
 	r.hgetall('session:' + cookie, function (err, session) {
 		if (err)
 			return respond_error(resp, "Logout error.");

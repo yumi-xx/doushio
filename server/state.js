@@ -106,6 +106,8 @@ function read_templates(cb) {
 		filter: read('tmpl', 'filter.html'),
 		curfew: read('tmpl', 'curfew.html'),
 		suspension: read('tmpl', 'suspension.html'),
+		login: read('tmpl', 'login.html'),
+		logout: read('tmpl', 'logout.html'),
 		notFound: read('www', '404.html'),
 		serverError: read('www', '50x.html'),
 	}, cb);
@@ -127,6 +129,8 @@ function expand_templates(res) {
 		filterTmpl: tmpl(res.filter).tmpl,
 		curfewTmpl: tmpl(res.curfew).tmpl,
 		suspensionTmpl: tmpl(res.suspension).tmpl,
+		loginTmpl: tmpl(res.login).tmpl,
+		logoutTmpl: tmpl(res.logout).tmpl,
 		notFoundHtml: res.notFound,
 		serverErrorHtml: res.serverError,
 	};

@@ -83,6 +83,7 @@ exports.SERVER_STATE = [
 	'tmpl/filter.html',
 	'tmpl/index.html',
 	'tmpl/login.html',
+	'tmpl/logout.html',
 	'tmpl/redirect.html',
 ];
 

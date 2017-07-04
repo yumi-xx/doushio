@@ -23,7 +23,7 @@ var config = {
 	// %s will be substitued for the user's username at the time of the
 	// query
 	MYSQL_QUERY: "SELECT howler.`password` AS password, howler.`group` "
-		+ "AS group FROM howler WHERE howler.`username` = '%s'",
+		+ "AS group FROM howler WHERE howler.`username` = %s",
 
 	REDIS_PORT: 6379,
 	READ_ONLY: false,
