@@ -236,7 +236,15 @@ OS.red_string = function (ref) {
 	}
 	// Pouting machine functionality, show off the rules page!
 	else if (ref == '>/rules/') {
-		this.callback(safe('<a href="/rules">>>>/rules/</a>'));
+		dest = "/rules";
+		this.callback(safe('<a href="' + dest + '">>>>/rules/</a>'));
+		return;
+	}
+	else if (ref == '>/coffee/') {
+		// Making out own link because a new tab doesn't open
+		// for some reason if we let this fall to new_tab_link
+		dest = "/outbound/coffee";
+		this.callback(safe('<a href="' + dest + '" rel="nofollow" target="_blank">>>>/coffee/</a>'));
 		return;
 	}
 	else if (prefix == '>/w') {

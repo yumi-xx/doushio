@@ -617,6 +617,10 @@ web.resource(/^\/outbound\/hash\/([\w+\/]{22})$/, function (req, params, cb) {
 	var dest = 'http://archive.foolz.us/_/search/image/' + escape(params[1]);
 	cb(null, 303.1, dest);
 });
+web.resource(/^\/outbound\/coffee$/, function (req, params, cb) {
+	var dest = 'https://bigmike.sne.jp/coffee/';
+	cb(null, 303.1, dest);
+});
 
 web.resource(/^\/outbound\/a\/(\d{0,10})$/, function (req, params, cb) {
 	var thread = parseInt(params[1], 10);
