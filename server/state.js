@@ -108,7 +108,7 @@ function read_templates(cb) {
 		suspension: read('tmpl', 'suspension.html'),
 		login: read('tmpl', 'login.html'),
 		logout: read('tmpl', 'logout.html'),
-		notFound: read('www', '404.html'),
+		notFound: read('tmpl', '404.html'),
 		serverError: read('www', '50x.html'),
 		rules: read('tmpl', 'rules.html'),
 	}, cb);
@@ -132,7 +132,7 @@ function expand_templates(res) {
 		suspensionTmpl: tmpl(res.suspension).tmpl,
 		loginTmpl: tmpl(res.login).tmpl,
 		logoutTmpl: tmpl(res.logout).tmpl,
-		notFoundHtml: res.notFound,
+		notFoundTmpl: tmpl(res.notFound).tmpl,
 		serverErrorHtml: res.serverError,
 		rulesTmpl: tmpl(res.rules).tmpl,
 	};

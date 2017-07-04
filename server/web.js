@@ -331,23 +331,18 @@ exports.notFoundHtml = preamble + '<title>404</title>404';
 exports.serverErrorHtml = preamble + '<title>500</title>Server error';
 
 hooks.hook('reloadResources', function (res, cb) {
-	exports.notFoundHtml = res.notFoundHtml;
+	exports.notFoundTmpl = res.notFoundTmpl;
 	exports.serverErrorHtml = res.serverErrorHtml;
 	exports.rulesTmpl = res.rulesTmpl;
 	cb(null);
 });
 
 function render_404(resp) {
-	fs.readFile('www/404.html', 'UTF-8', function (err, lines) {
-		if (err) {
-			resp.end();
-			return;
-		}
-		resp.writeHead(404, noCacheHeaders);
-		resp.end(lines);
-	});
-
-//	resp.end(exports.notFoundHtml);
+/* Apache intercepts our 404 instead of rendering our custom page
+ * So just throw a 200 for now. . .
+ */
+	resp.writeHead(200, noCacheHeaders);
+	resp.end(exports.notFoundTmpl[0]);
 };
 exports.render_404 = render_404;
 
