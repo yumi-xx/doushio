@@ -235,17 +235,11 @@ OS.red_string = function (ref) {
 		return;
 	}
 	// Pouting machine functionality, show off the rules page!
-	else if (ref == '>/rules/') {
+	else if (ref == '>/rules/' || ref == '>/ruuruus/') {
 		dest = "/rules";
-		this.callback(safe('<a href="' + dest + '">>>>/rules/</a>'));
-		return;
 	}
 	else if (ref == '>/coffee/') {
-		// Making out own link because a new tab doesn't open
-		// for some reason if we let this fall to new_tab_link
 		dest = "/outbound/coffee";
-		this.callback(safe('<a href="' + dest + '" rel="nofollow" target="_blank">>>>/coffee/</a>'));
-		return;
 	}
 	else if (prefix == '>/w') {
 		dest = 'https://www.youtube.com/' + ref.slice(2);
@@ -607,7 +601,7 @@ function pick_spoiler(metaIndex) {
 exports.pick_spoiler = pick_spoiler;
 
 function new_tab_link(srcEncoded, inside, cls) {
-	return [safe('<a href="' + srcEncoded + '" onclick="return false;"  target="_blank"' +
+	return [safe('<a href="' + srcEncoded + '" target="_blank"' +
 		(cls ? ' class="'+cls+'"' : '') +
 		' rel="nofollow">'), inside, safe('</a>')];
 }
