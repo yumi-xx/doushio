@@ -95,7 +95,6 @@ exports.write_thread_html = function (reader, req, out, opts) {
 		out.write('</section><hr>\n');
 	}
 };
-
 function make_link_rels(board, bits) {
 	var path = imager.config.MEDIA_URL + 'css/';
 
@@ -119,6 +118,7 @@ exports.write_board_head = function (out, board, nav) {
 	var indexTmpl = RES.indexTmpl;
 	var title = STATE.hot.TITLES[board] || escape(board);
 	var announcement = STATE.hot.BOARD_ANNOUNCEMENTS[board];
+	var alert = RES.wolfalert;
 	var metaDesc = "Real-time imageboard";
 
 	var i = 0;
@@ -135,6 +135,8 @@ exports.write_board_head = function (out, board, nav) {
 	out.write(title);
 	out.write(indexTmpl[i++]);
 	out.write(announcement);
+	out.write(indexTmpl[i++]);
+	out.write(alert);
 	out.write(indexTmpl[i++]);
 	var buttons = common.action_link_html('#persona', 'Persona', 'persona');
 	out.write(buttons + '\n<hr>\n');

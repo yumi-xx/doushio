@@ -19,6 +19,7 @@
 	},
 	"dependencies": {
 		"async": "^2.5.0",
+		"cheerio": "^1.0.0-rc.2",
 		"crypt3": "^1.0.0",
 		"formidable": "^1.1.1",
 		"minimist": "^1.2.0",

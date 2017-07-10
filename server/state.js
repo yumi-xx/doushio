@@ -81,6 +81,12 @@ function reload_scripts(cb) {
 		});
 	});
 }
+function reload_alerts(cb) {
+	web.scrape_wolfalert(function (alert) {
+		RES.wolfalert = alert;
+		cb(null);
+	});
+}
 
 function reload_resources(cb) {
 
@@ -95,6 +101,7 @@ function reload_resources(cb) {
 		hooks.trigger('reloadResources', RES, cb);
 	});
 }
+
 
 function read_templates(cb) {
 	function read(dir, file) {
@@ -153,6 +160,7 @@ exports.reload_hot_resources = function (cb) {
 		pipeline.rebuild,
 		reload_scripts,
 		reload_resources,
+		reload_alerts,
 	], cb);
 }
 

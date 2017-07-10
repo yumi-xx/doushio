@@ -1,12 +1,14 @@
 var _ = require('../lib/underscore'),
     auth = require('./auth'),
     caps = require('./caps'),
+    cheerio = require('cheerio'),
     config = require('../config'),
     formidable = require('formidable'),
     fs = require('fs'),
     hooks = require('../hooks'),
     Stream = require('stream'),
     url_parse = require('url').parse,
+    request = require('request'),
     util = require('util'),
     winston = require('winston');
 
@@ -331,6 +333,7 @@ exports.notFoundHtml = preamble + '<title>404</title>404';
 exports.serverErrorHtml = preamble + '<title>500</title>Server error';
 
 hooks.hook('reloadResources', function (res, cb) {
+	exports.ncsuHtml = res.ncsuHtml;
 	exports.notFoundTmpl = res.notFoundTmpl;
 	exports.serverErrorHtml = res.serverErrorHtml;
 	exports.rulesTmpl = res.rulesTmpl;
@@ -357,6 +360,21 @@ function render_rules(req, resp) {
 	resp.end(exports.rulesTmpl[0]);
 };
 exports.render_rules = render_rules;
+
+function scrape_wolfalert(cb)
+{
+	var body = request({
+		url: 'https://bigmike.sne.jp/ncsu/index.html',
+		// Spoof a really popular user-agent
+		headers: { 'User-Agent': 'Mozilla/5.0 '
+		+ '(Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+		+ '(KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36' }
+	}, function (err, resp, body) {
+		var $ = cheerio.load(body);
+		cb($(".alert-txt").html());
+	});
+}
+exports.scrape_wolfalert = scrape_wolfalert;
 
 function slow_request(req, resp) {
 	var n = Math.floor(1000 + Math.random() * 500);
