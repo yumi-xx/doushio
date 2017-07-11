@@ -364,8 +364,9 @@ exports.render_rules = render_rules;
 function scrape_wolfalert(cb)
 {
 	var body = request({
-		url: 'https://bigmike.sne.jp/ncsu/index.html',
-		// Spoof a really popular user-agent
+		url: 'https://ncsu,edu/',
+		// Spoof a really popular user-agent so we don't look
+		// like a bot ;)
 		headers: { 'User-Agent': 'Mozilla/5.0 '
 		+ '(Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
 		+ '(KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36' }

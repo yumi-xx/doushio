@@ -136,7 +136,8 @@ exports.write_board_head = function (out, board, nav) {
 	out.write(indexTmpl[i++]);
 	out.write(announcement);
 	out.write(indexTmpl[i++]);
-	out.write(alert);
+	if (alert)
+		out.write(alert);
 	out.write(indexTmpl[i++]);
 	var buttons = common.action_link_html('#persona', 'Persona', 'persona');
 	out.write(buttons + '\n<hr>\n');

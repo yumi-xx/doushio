@@ -1110,6 +1110,8 @@ function start_server() {
 
 	process.on('SIGHUP', hot_reloader);
 	db.on_pub('reloadHot', hot_reloader);
+	// Reload site alerts every hour (this is mainly the WolfAlert)
+	setInterval(STATE.reload_alerts, 1000 * 60 * 60);
 
 	if (config.DAEMON) {
 		var cfg = config.DAEMON;
