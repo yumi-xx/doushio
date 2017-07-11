@@ -364,13 +364,19 @@ exports.render_rules = render_rules;
 function scrape_wolfalert(cb)
 {
 	var body = request({
-		url: 'https://ncsu,edu/',
+		url: 'https://ncsu.edu/index.html',
 		// Spoof a really popular user-agent so we don't look
 		// like a bot ;)
 		headers: { 'User-Agent': 'Mozilla/5.0 '
 		+ '(Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-		+ '(KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36' }
+		+ '(KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+		method: 'GET',
+		rejectUnauthorized: false }
 	}, function (err, resp, body) {
+		if (err) {
+			console.log('Error scraping wolfalert');
+			cb(null);
+		}
 		var $ = cheerio.load(body);
 		cb($(".alert-txt").html());
 	});

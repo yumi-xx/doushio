@@ -1,6 +1,28 @@
-<!doctype html>
-<meta charset=utf-8>
-<title>banned</title>
-suspended for $WHY<br><br>
-expiry $UNTIL<br><br>
-appeal at $EMAIL
+<!DOCTYPE html>
+<HTML>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/ncsu.css">
+	<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/login.css">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0">
+</head>
+<body>
+<div id="title">
+	<h1>Congratulations!</h1>
+</div>
+<article id="1">
+	<header>
+	<b class="admin">Anonymous ## Admin</b>
+	<nav style="display:inline;">
+		<a href="#">No. 1</a>
+	</nav>
+	</header>
+	<blockquote style="text-align:center">
+		You've been banned for: $WHY<br/>
+		Expiry $UNTIL<br/><br/>
+		Appeal at $MAIL
+	</blockquote>
+	<img id="splash" src="{{MEDIA_URL}}css/banned.png"></img>
+<span style="text-align:center;display:block;">The material located at this site is <span style="font-size:50%;">not</span> endorsed, sponsored or provided by or on behalf of North Carolina State University.</span>
+</article>
+</body>
+</HTML>
