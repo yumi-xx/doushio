@@ -136,7 +136,7 @@ exports.write_board_head = function (out, board, nav) {
 	out.write(announcement);
 	out.write(indexTmpl[i++]);
 	if (RES.wolfalert)
-		out.write(alert);
+		out.write(RES.wolfalert);
 	out.write(indexTmpl[i++]);
 	var buttons = common.action_link_html('#persona', 'Persona', 'persona');
 	out.write(buttons + '\n<hr>\n');
@@ -167,8 +167,8 @@ exports.write_thread_head = function (out, board, op, opts) {
 	out.write(indexTmpl[i++]);
 	out.write(announcement);
 	out.write(indexTmpl[i++]);
-	if (RES.alert)
-		out.write(alert);
+	if (RES.wolfalert)
+		out.write(RES.wolfalert);
 	out.write(indexTmpl[i++]);
 	var buttons = common.action_link_html('#bottom', 'Bottom') + ' ' +
 			common.action_link_html('#persona', 'Persona', 'persona');

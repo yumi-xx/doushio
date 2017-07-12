@@ -363,8 +363,19 @@ function load_OPs(callback) {
 			}
 			if (thread.immortal)
 				return r.zrem(expiryKey, entry, cb);
-			var score = expiry_queue_score(thread.time);
-			r.zadd(expiryKey, score, entry, cb);
+			r.lindex('thread:'+op+':posts', -1, function(err, mostrecentpost) {
+				// Threads with no posts simply expire when the OP expires
+				if (err) {
+					var score = expiry_queue_score(thread.time);
+					return r.zadd(expiryKey, score, entry, cb);
+				}
+				// Otherwise update the expiry time to the last post's time
+				r.hget('post:'+mostrecentpost, 'time', function (err, time) {
+					var score = expiry_queue_score(time);
+					return r.zadd(expiryKey, score, entry, cb);
+				});
+			});
+
 		});
 	}
 }
@@ -564,8 +575,13 @@ Y.insert_post = function (msg, body, extra, callback) {
 	m.incr(tagKey + ':postctr'); // must be first
 	if (op)
 		m.hget('thread:' + op, 'subject'); // must be second
-	if (bump)
+	if (bump) {
 		m.incr(tagKey + ':bumpctr');
+		var entry = msg.op + ':' + tag_key(this.tag);
+		var score = expiry_queue_score(msg.time);
+		var expiryKey = expiry_queue_key();
+		r.zadd(expiryKey, score, entry);
+	}
 	m.sadd('liveposts', key);
 
 	hooks.trigger_sync('inlinePost', {src: msg, dest: view});
