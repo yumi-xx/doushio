@@ -9,11 +9,11 @@ var async = require('async'),
 var RANGES = require('./state').dbCache.ranges;
 
 function can_access_board(ident, board) {
+	if (ident.ban || ident.suspension)
+		return false;
 	if (board == 'graveyard' && can_administrate(ident))
 		return true;
 	if (board == config.STAFF_BOARD && !can_moderate(ident))
-		return false;
-	if (ident.ban || ident.suspension)
 		return false;
 	if (!temporal_access_check(ident, board))
 		return false;

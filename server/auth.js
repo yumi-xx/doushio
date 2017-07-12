@@ -84,9 +84,6 @@ exports.login = function (req, resp) {
 		db.end();
 	});
 }
-exports.logout = function(req, resp) {
-
-}
 
 exports.set_cookie = function (req, resp, info) {
 	var pass = random_str();
@@ -109,7 +106,7 @@ function extract_login_cookie(chunks) {
 }
 exports.extract_login_cookie = extract_login_cookie;
 
-exports.check_cookie = function (cookie, callback) {
+function check_cookie(cookie, callback) {
 	var r = connect();
 	r.hgetall('session:' + cookie, function (err, session) {
 		if (err)
@@ -119,27 +116,29 @@ exports.check_cookie = function (cookie, callback) {
 		callback(null, session);
 	});
 };
+exports.check_cookie = check_cookie;
 
 exports.logout = function (req, resp) {
 	var cookie = extract_login_cookie(req.cookies);
-	if (!cookie) {
-		console.log('no cookie');
-		return respond_error(resp, "No login cookie for logout.");
-	}
-	if (req.method != 'POST') {
-		// Write out the login template, chunked by any
-		// $VARIABLES (we have none here however)
-		resp.write(RES.logoutTmpl[0]);
-		resp.write(req.ident.user);
-		resp.end(RES.logoutTmpl[1]);
-		return;
-	}
-	var r = connect();
-	r.hgetall('session:' + cookie, function (err, session) {
-		if (err)
-			return respond_error(resp, "Logout error.");
-		r.del('session:' + cookie);
-		respond_ok(req, resp, 'a=; expires=Thu, 01 Jan 1970 00:00:00 GMT');
+	exports.check_cookie(cookie, function (err) {
+		if (err) {
+			return respond_error(resp, err);
+		}
+		if (req.method != 'POST') {
+			// Write out the login template, chunked by any
+			// $VARIABLES (we have none here however)
+			resp.write(RES.logoutTmpl[0]);
+			resp.write(req.ident.user ? req.ident.user : '');
+			resp.end(RES.logoutTmpl[1]);
+			return;
+		}
+		var r = connect();
+		r.hgetall('session:' + cookie, function (err, session) {
+			if (err)
+				return respond_error(resp, "Logout error.");
+			r.del('session:' + cookie);
+			respond_ok(req, resp, 'a=; expires=Thu, 01 Jan 1970 00:00:00 GMT');
+		});
 	});
 };
 

@@ -364,8 +364,10 @@ function load_OPs(callback) {
 			if (thread.immortal)
 				return r.zrem(expiryKey, entry, cb);
 			r.lindex('thread:'+op+':posts', -1, function(err, mostrecentpost) {
+				if (err)
+					return err;
 				// Threads with no posts simply expire when the OP expires
-				if (err) {
+				if (!mostrecentpost) {
 					var score = expiry_queue_score(thread.time);
 					return r.zadd(expiryKey, score, entry, cb);
 				}
@@ -375,7 +377,6 @@ function load_OPs(callback) {
 					return r.zadd(expiryKey, score, entry, cb);
 				});
 			});
-
 		});
 	}
 }
