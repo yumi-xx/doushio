@@ -165,12 +165,6 @@ exports.scan_client_caps = function () {
 				okyaku.blackhole = true;
 				return;
 			}
-			if (!caps.can_access_board(ident, okyaku.board)) {
-				try {
-					okyaku.socket.close();
-				}
-				catch (e) { /* bleh */ }
-			}
 		});
 	}
 };
