@@ -128,7 +128,7 @@ exports.logout = function (req, resp) {
 			// Write out the login template, chunked by any
 			// $VARIABLES (we have none here however)
 			resp.write(RES.logoutTmpl[0]);
-			resp.write(req.ident.user ? req.ident.user : '');
+			resp.write(req.ident.user);
 			resp.end(RES.logoutTmpl[1]);
 			return;
 		}

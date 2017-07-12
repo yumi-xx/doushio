@@ -13,6 +13,8 @@ function can_access_board(ident, board) {
 		return false;
 	if (board == 'graveyard' && can_administrate(ident))
 		return true;
+	if (board == 'archive' && can_moderate(ident))
+		return true;
 	if (board == config.STAFF_BOARD && !can_moderate(ident))
 		return false;
 	if (!temporal_access_check(ident, board))
