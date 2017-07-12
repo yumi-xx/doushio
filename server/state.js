@@ -82,9 +82,9 @@ function reload_scripts(cb) {
 	});
 }
 function reload_alerts(cb) {
-	web.scrape_wolfalert(function (alert) {
+	require('./amusement').scrape_wolfalert(function (alert) {
 		if (RES.wolfalert = alert)
-			winston.info("A wolf alert is in effect");
+			console.log("A wolf alert is in effect");
 		if (typeof cb === 'function') cb(null);
 	});
 }

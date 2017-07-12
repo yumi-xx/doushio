@@ -1,14 +1,12 @@
 var _ = require('../lib/underscore'),
     auth = require('./auth'),
     caps = require('./caps'),
-    cheerio = require('cheerio'),
     config = require('../config'),
     formidable = require('formidable'),
     fs = require('fs'),
     hooks = require('../hooks'),
     Stream = require('stream'),
     url_parse = require('url').parse,
-    request = require('request'),
     util = require('util'),
     winston = require('winston');
 
@@ -360,28 +358,6 @@ function render_rules(req, resp) {
 	resp.end(exports.rulesTmpl[0]);
 };
 exports.render_rules = render_rules;
-
-function scrape_wolfalert(cb)
-{
-	var body = request({
-		url: 'https://ncsu.edu/index.html',
-		// Spoof a really popular user-agent so we don't look
-		// like a bot ;)
-		headers: { 'User-Agent': 'Mozilla/5.0 '
-		+ '(Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-		+ '(KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-		method: 'GET',
-		rejectUnauthorized: false }
-	}, function (err, resp, body) {
-		if (err) {
-			console.log('Error scraping wolfalert');
-			cb(null);
-		}
-		var $ = cheerio.load(body);
-		cb($(".alert-txt").html());
-	});
-}
-exports.scrape_wolfalert = scrape_wolfalert;
 
 function slow_request(req, resp) {
 	var n = Math.floor(1000 + Math.random() * 500);

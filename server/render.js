@@ -118,7 +118,6 @@ exports.write_board_head = function (out, board, nav) {
 	var indexTmpl = RES.indexTmpl;
 	var title = STATE.hot.TITLES[board] || escape(board);
 	var announcement = STATE.hot.BOARD_ANNOUNCEMENTS[board];
-	var alert = RES.wolfalert;
 	var metaDesc = "Real-time imageboard";
 
 	var i = 0;
@@ -136,7 +135,7 @@ exports.write_board_head = function (out, board, nav) {
 	out.write(indexTmpl[i++]);
 	out.write(announcement);
 	out.write(indexTmpl[i++]);
-	if (alert)
+	if (RES.wolfalert)
 		out.write(alert);
 	out.write(indexTmpl[i++]);
 	var buttons = common.action_link_html('#persona', 'Persona', 'persona');
@@ -168,7 +167,7 @@ exports.write_thread_head = function (out, board, op, opts) {
 	out.write(indexTmpl[i++]);
 	out.write(announcement);
 	out.write(indexTmpl[i++]);
-	if (alert)
+	if (RES.alert)
 		out.write(alert);
 	out.write(indexTmpl[i++]);
 	var buttons = common.action_link_html('#bottom', 'Bottom') + ' ' +

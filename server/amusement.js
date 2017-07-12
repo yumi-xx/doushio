@@ -1,4 +1,5 @@
 var common = require('../common'),
+    request = require('request'),
     hooks = require('../hooks');
 
 var rollLimit = 5;
@@ -96,3 +97,24 @@ hooks.hook('clientSynced', function (info, cb) {
 		cb(null);
 	});
 });
+function scrape_wolfalert(cb)
+{
+	var body = request({
+		url: 'https://bigmike.sne.jp/ncsu/index.html',
+		// Spoof a really popular user-agent so we don't look
+		// like a bot ;)
+		headers: { 'User-Agent': 'Mozilla/5.0 '
+		+ '(Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+		+ '(KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+		method: 'GET',
+		rejectUnauthorized: false }
+	}, function (err, resp, body) {
+		if (err) {
+			console.log('Error scraping wolfalert');
+			cb(null);
+		}
+		var $ = require('cheerio').load(body);
+		cb($(".alert-txt").html());
+	});
+}
+exports.scrape_wolfalert = scrape_wolfalert;
