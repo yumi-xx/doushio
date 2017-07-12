@@ -32,7 +32,7 @@ hooks.hook_sync('boardDiversion', function (info) {
 });
 
 function under_curfew(ident, board) {
-	if (caps.can_administrate(ident))
+	if (ident && caps.can_administrate(ident))
 		return false;
 	var curfew = config.CURFEW_HOURS;
 	if (!curfew || (config.CURFEW_BOARDS || []).indexOf(board) < 0)
@@ -40,6 +40,7 @@ function under_curfew(ident, board) {
 	var hour = new Date().getUTCHours();
 	return curfew.indexOf(hour) < 0;
 }
+exports.under_curfew = under_curfew;
 
 function curfew_ending_time(board) {
 	var curfew = config.CURFEW_HOURS;
@@ -60,6 +61,7 @@ function curfew_ending_time(board) {
 			return candidates[i];
 	return null;
 }
+exports.curfew_ending_time = curfew_ending_time;
 
 function curfew_starting_time(board) {
 	var curfew = config.CURFEW_HOURS;
@@ -82,6 +84,7 @@ function curfew_starting_time(board) {
 			return candidates[i];
 	return null;
 };
+exports.curfew_starting_time = curfew_starting_time;
 
 function compare_dates(a, b) {
 	return a.getTime() - b.getTime();

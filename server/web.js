@@ -359,6 +359,47 @@ function render_rules(req, resp) {
 };
 exports.render_rules = render_rules;
 
+exports.status = function (req, resp) {
+	var msg;
+	var curfew = require('../curfew/server');
+	var board = req.query.board;
+	var open = !curfew.under_curfew(null, board);
+	if (board) {
+		if (typeof req.query.open !== 'undefined') {
+			return (open ? resp.end('open') : (resp.end('closed')));
+		}
+		if (typeof req.query.openin !== 'undefined' && !open) {
+			var END = curfew.curfew_ending_time(board);
+			var diff = Math.floor((END - Date.now()) / 1000);
+			var hours = Math.floor(diff / 3600);
+			var minutes = Math.floor(diff / 60) % 60;
+			var seconds = diff % 60;
+			if (hours) resp.write(hours + ':');
+			if (hours || minutes) resp.write(minutes + ':');
+			resp.end(seconds);
+		}
+		if (typeof req.query.closein !== 'undefined' && open) {
+			var BEGIN = curfew.curfew_starting_time(board);
+			var diff = Math.floor((BEGIN - Date.now()) / 1000);
+			var hours = Math.floor(diff / 3600);
+			var minutes = Math.floor(diff / 60) % 60;
+			var seconds = diff % 60;
+                        if (hours) resp.write(hours.toString() + ':');
+			if (hours || minutes) resp.write(minutes.toString() + ':');
+			resp.end(seconds.toString());
+		}
+		if (typeof req.query.closeat !== 'undefined') {
+			var BEGIN = curfew.curfew_starting_time(board);
+			resp.end(JSON.stringify(BEGIN));
+		}
+		if (typeof req.query.openat !== 'undefined') {
+			var END = curfew.curfew_ending_time(board);
+			resp.end(JSON.stringify(END));
+		}
+	}
+	return resp.end('bad parameters');
+}
+
 function slow_request(req, resp) {
 	var n = Math.floor(1000 + Math.random() * 500);
 	if (Math.random() < 0.1)

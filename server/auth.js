@@ -17,8 +17,11 @@ function connect() {
 
 // Logs in users who make a POST to the login page
 // Upgraded to use a SQL database
-exports.login = function (req, resp) {
+exports.login = function (req, resp, cb) {
 	// Has the user made an auth attempt?
+	if (req.ident.ban || req.ident.suspension) {
+		return cb(404);
+	}
 	if (req.method.toLowerCase() != 'post') {
 		// Write out the login template, chunked by any
 		// $VARIABLES (we have none here however)
