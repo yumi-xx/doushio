@@ -90,58 +90,6 @@ $DOC.on('click', '.watch', function (e) {
 	return false;
 });
 
-$DOC.on('mouseenter', '.watch', function (event) {
-	var $target = $(event.target);
-	if ($target.data('requestedTitle'))
-		return;
-	$target.data('requestedTitle', true);
-	/* Edit textNode in place so that we don't mess with the embed */
-	var node = text_child($target);
-	if (!node)
-		return;
-	var orig = node.textContent;
-	with_dom(function () {
-		node.textContent = orig + '...';
-	});
-	var m = $target.attr('href').match(youtube_url_re);
-	if (!m)
-		return;
-
-	$.ajax({
-		url: 'https://www.googleapis.com/youtube/v3/videos',
-		data: {id: m[2],
-		       key: config.GOOGLE_API_KEY,
-		       part: 'snippet,status',
-		       fields: 'items(snippet(title),status(embeddable))'},
-		dataType: 'json',
-		success: function (data) {
-			with_dom(gotInfo.bind(null, data));
-		},
-		error: function () {
-			with_dom(function () {
-				node.textContent = orig + '???';
-			});
-		},
-	});
-
-	function gotInfo(data) {
-		var title = data && data.items && data.items[0].snippet &&
-				data.items[0].snippet.title;
-		if (title) {
-			node.textContent = orig + ': ' + title;
-			$target.css({color: 'black'});
-		}
-		else
-			node.textContent = orig + ' (gone?)';
-
-		if (data && data.items && data.items[0].status &&
-			data.items[0].status.embeddable == false) {
-			node.textContent += ' (EMBEDDING DISABLED)';
-			$target.data('noembed', true);
-		}
-	}
-});
-
 function text_child($target) {
 	return $target.contents().filter(function () {
 		return this.nodeType === 3;
@@ -191,49 +139,6 @@ $DOC.on('click', '.soundcloud', function (e) {
 	return false;
 });
 
-/* lol copy pasta */
-$DOC.on('mouseenter', '.soundcloud', function (event) {
-	var $target = $(event.target);
-	if ($target.data('requestedTitle'))
-		return;
-	$target.data('requestedTitle', true);
-	/* Edit textNode in place so that we don't mess with the embed */
-	var node = text_child($target);
-	if (!node)
-		return;
-	var orig = node.textContent;
-	with_dom(function () {
-		node.textContent = orig + '...';
-	});
-	var m = $target.attr('href').match(soundcloud_url_re);
-	if (!m)
-		return;
-
-	$.ajax({
-		url: '//soundcloud.com/oembed',
-		data: {format: 'json', url: 'http://soundcloud.com/' + m[1]},
-		dataType: 'json',
-		success: function (data) {
-			with_dom(gotInfo.bind(null, data));
-		},
-		error: function () {
-			with_dom(function () {
-				node.textContent = orig + '???';
-			});
-		},
-	});
-
-	function gotInfo(data) {
-		var title = data && data.title;
-		if (title) {
-			node.textContent = orig + ': ' + title;
-			$target.css({color: 'black'});
-		}
-		else
-			node.textContent = orig + ' (gone?)';
-	}
-});
-
 /* TWITTER */
 
 window.twitter_url_re = /(?:>>>*?)?(?:https?:\/\/)?(?:www\.|mobile\.|m\.)?twitter\.com\/(\w{1,15})\/status\/(\d{4,20})\/?/;
@@ -277,60 +182,6 @@ $DOC.on('click', '.tweet', function (e) {
 		});
 	});
 	return false;
-});
-
-$DOC.on('mouseenter', '.tweet', function (event) {
-	var $target = $(event.target);
-	if (!$target.is('a.tweet') || $target.data('tweet'))
-		return;
-	setup_tweet($target);
-
-	fetch_tweet($target, function (err, info) {
-		if (err) {
-			if (info && info.node) {
-				$target.data('tweet', 'error');
-				with_dom(function () {
-					info.node.textContent += ' (error: ' + err + ')';
-				});
-			}
-			else
-				console.warn(err);
-			return;
-		}
-
-		var node = info.node;
-		var orig = $target.data('tweet-ref') || node.textContent;
-		var html = info.tweet && info.tweet.html;
-		if (!html) {
-			$target.data('tweet', 'error');
-			node.textContent = orig + ' (broken?)';
-			return;
-		}
-		$target.data('tweet', info.tweet);
-		// twitter sends us HTML of the tweet; scrape it a little
-		var $tweet = $($.parseHTML(html)[0]);
-		var $p = $tweet.find('p');
-		if ($p.length) {
-			// chop the long ID number off our ref
-			var prefix = orig;
-			var m = /^(.+)\/\d{4,20}(?:s=\d+)?$/.exec(prefix);
-			if (m)
-				prefix = m[1];
-
-			var text = scrape_tweet_p($p);
-			with_dom(function () {
-				var expanded = prefix + ' \u00b7 ' + text;
-				$target.data('tweet-expanded', expanded);
-				node.textContent = expanded;
-				$target.css({color: 'black'});
-			});
-		}
-		else {
-			with_dom(function () {
-				node.textContent = orig + ' (could not scrape)';
-			});
-		}
-	});
 });
 
 /// call this before fetch_tweet or any DOM modification of the ref

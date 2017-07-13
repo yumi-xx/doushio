@@ -35,10 +35,7 @@ body > aside {
 	font-style: normal;
 	margin: -2px;
 	padding: 2px;
-	text-decoration: none;
-}
-.embed, .embed:hover {
-	color: inherit;
+	color: #d00;
 }
 del, del em {
 	background-color: black;
@@ -437,8 +434,6 @@ blockquote.twitter-tweet > a {
 	display: block;
 	font-size: 14px;
 	text-decoration: none;
-}
-#mascot {
 }
 input#image {
 	height:19px;
