@@ -1832,6 +1832,21 @@ Y.teardown = function (board, cb) {
 	var self = this;
 	filter.get_all(NaN); // no length limit
 	filter.on('thread', function (thread) {
+		if (config.CURFEW_PURGE) {
+			console.log("Would have purged thread " + thread);
+/*			yaku.archive_thread(op, function (err) {
+				if (err)
+					return winston.error(err);
+				r.zrem(expiryKey, entry, function (err, n) {
+					if (err)
+						return winston.error(err)
+					winston.info("Archived thread #" + op);
+					if (n != 1)
+						winston.warn("Not archived?");
+				});
+			});*/
+		}
+
 		self._log(m, thread.num, common.TEARDOWN, []);
 	});
 	filter.on('error', cb);
