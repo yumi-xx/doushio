@@ -126,10 +126,12 @@ function enforce(board) {
 	at_next_curfew_start(board, function () {
 		winston.info('Curfew ' + board + ' at ' +
 				new Date().toUTCString());
-		shutdown(board, function (err) {
-			if (err)
-				winston.error(err);
-		});
+		if (config.CURFEW_PURGE) {
+			shutdown(board, function (err) {
+				if (err)
+					winston.error(err);
+			});
+		}
 		setTimeout(enforce.bind(null, board), 30 * 1000);
 	});
 }

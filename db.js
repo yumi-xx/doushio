@@ -1832,24 +1832,20 @@ Y.teardown = function (board, cb) {
 	var self = this;
 	filter.get_all(NaN); // no length limit
 	filter.on('thread', function (thread) {
-		if (config.CURFEW_PURGE) {
-			var op = thread.num;
-			var expiryKey = db.expiry_queue_key();
-			// Register a new db instance for archiving
-			var yaku = new Yakusoku('archive', db.UPKEEP_IDENT);
-			yaku.archive_thread(op, function (err) {
+		var op = thread.num;
+		var expiryKey = db.expiry_queue_key();
+		self.archive_thread(op, function (err) {
+			if (err)
+				return winston.error(err);
+			// Additionally remove thread from expiry queue
+			m.zrem(expiryKey, 'thread:', function (err, n) {
 				if (err)
-					return winston.error(err);
-				m.zrem(expiryKey, 'thread:', function (err, n) {
-					if (err)
-						return winston.error(err)
-					winston.info("Archived thread #" + op);
-					if (n != 1)
-						winston.warn("Not archived?");
-				});
-				yaku.disconnect();
+					return winston.error(err)
+				winston.info("Archived thread #" + op);
+				if (n != 1)
+					winston.warn("Not archived?");
 			});
-		}
+		});
 
 		self._log(m, thread.num, common.TEARDOWN, []);
 	});

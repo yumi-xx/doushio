@@ -1,4 +1,4 @@
-a, blockquote a {
+a, blockquote a, .embed {
 	color: #3366BB;
 }
 a:hover, .email b:hover {

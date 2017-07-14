@@ -1,4 +1,4 @@
-a, blockquote a:hover, b.moderator {
+a, blockquote a:hover, b.moderator, .embed {
 	color: #81a2be;
 }
 a:hover, blockquote a, .email b:hover, article.editing a:hover {
@@ -39,9 +39,6 @@ body {
 body, pre, .themed {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10pt;
-}
-.embed {
-	background-color: white;
 }
 em {
 	color: #b5bd68;

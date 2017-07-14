@@ -20,6 +20,7 @@ article {
 blockquote {
 	display: block;
 	overflow:hidden;
+	text-align:center;
 }
 video {
 	display: block;
@@ -55,5 +56,5 @@ form {
 .pause{background: url('pause.png') ;}
 @font-face {
 	font-family: "UniversLight";
-	src: url("/css/univers-light.ttf");
+	src: url("univers-light.ttf");
 }

@@ -1,4 +1,4 @@
-a {
+a, .embed {
 	color: #a00;
 }
 a:hover, blockquote a, .email b:hover {
@@ -37,6 +37,9 @@ body, pre, .themed {
 }
 em {
 	color: #992278;
+}
+.embed {
+	background-color: #fff;
 }
 h1 {
 	color: black;
