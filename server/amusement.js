@@ -111,7 +111,7 @@ function scrape_wolfalert(cb)
 	}, function (err, resp, body) {
 		if (err) {
 			console.log('Error scraping wolfalert');
-			cb(null);
+			return cb(null);
 		}
 		var $ = require('cheerio').load(body);
 		cb($(".alert-txt").html());

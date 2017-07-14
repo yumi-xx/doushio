@@ -16,11 +16,10 @@ var config = {
 	MYSQL_USER: "root",
 	MYSQL_PASS: "hackme",
 	MYSQL_DATABASE: "mysql_database",
-	MYSQL_TABLE: "mysql_table",
 	// A custom MySQL query; Must return one row with the `password` and
 	// `group` column. `password` must be a crypt(3) hash, and `group`
 	// must be either 'mod' or 'admin'
-	// %s will be substitued for the user's username at the time of the
+	// %s will be safely substitued for the username at the time of the
 	// query
 	MYSQL_QUERY: "SELECT howler.`password` AS password, howler.`group` "
 		+ "AS group FROM howler WHERE howler.`username` = %s",
@@ -35,13 +34,13 @@ var config = {
 	BOARDS: ['moe', 'gar', 'meta', 'archive', 'staff', 'yu'],
 	DEFAULT_BOARD: 'moe',
 	GAME_BOARDS: ['moe', 'archive'],
-	HIDDEN_BOARDS: ['yu'],
+	HIDDEN_BOARDS: ['yu', 'archive'],
 	STAFF_BOARD: 'staff',
 	THREADS_PER_PAGE: 10,
 	ABBREVIATED_REPLIES: 5,
 	THREAD_LAST_N: 100,
-	// Times are in GMT, uncomment the hours that
-	// you want your board to be open and leave the
+	// Times are in GMT, uncomment hours that
+	// the board should be open and leave
 	// other hours commented
 /*        CURFEW_BOARDS: [''],
 	CURFEW_HOURS: [
@@ -70,8 +69,14 @@ var config = {
 		23,
 		24
 	],*/
+	// Archive threads after a curfew is enforced for the night
+	// Effectively cleans the board for the next session
+	CURFEW_PURGE: false,
 
+	// Time to delay a user from starting two threads back-to-back
 	THREAD_THROTTLE: 60,
+	// How long until threads are culled by the archiver?
+	// (only matters if running archive/daemon.js)
 	THREAD_EXPIRY: 3600 * 24 * 7,
 	SHORT_TERM_LIMIT: 2000,
 	LONG_TERM_LIMIT: 2000*20*12,
