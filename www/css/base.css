@@ -80,13 +80,14 @@ h3 {
 	display: inline;
 	font-size: inherit;
 }
-#announcements, #alerts {
+#announcements {
 	text-align: center;
-	color: #FF0000;
 }
 #alerts {
-	animation: blinker 1s 1;
-	animation-delay: 0.5s;
+	text-align: center;
+	max-width: 50%;
+	margin: auto;
+	border: 4px double;
 }
 header {
 	background: url('ui/box.png') left 3px no-repeat;
@@ -442,9 +443,4 @@ input#image {
 	padding-left:10px;
 	vertical-align:bottom;
 	background:none;
-}
-@-webkit-keyframes blinker {
-	0% { opacity: 1.0; }
-	50% { opacity: 0.0; }
-	100% { opacity: 1.0; }
 }

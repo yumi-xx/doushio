@@ -40,15 +40,16 @@ pre, .themed {
 em {
 	color: #6e9e06;
 }
-h1 {
+h1, h2, #announcements {
 	color: #b32407;
+}
+h1 {
 	font-family: "MS Pゴシック", "MS PGothic", "Mona", "Hiragino Kaku Gothic Pro", Helvetica, sans-serif;
 	font-size: 30px;
 	text-shadow: #8e3523 1px 1px 0px;
 	letter-spacing: 1px;
 }
 h2 {
-	color: #b32407;
 	font-family: "MS Pゴシック", "MS PGothic", "Mona", "Hiragino Kaku Gothic Pro", Helvetica, sans-serif;
 	text-shadow: #8e3523 1px 1px 0px;
 }

@@ -43,7 +43,7 @@ h1 {
 	font: bolder 28px Tahoma;
 	letter-spacing: -2px;
 }
-h2 {
+h2, #announcements {
 	color: #999;
 	font-family: Tahoma;
 }
