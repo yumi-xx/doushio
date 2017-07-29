@@ -11,6 +11,10 @@ article, aside {
 	margin: 2px;
 	padding: 4px 10px;
 }
+#top {
+	padding-left: 10px;
+	padding-right: 10px;
+}
 aside a, #options {
 	cursor: pointer;
 	position: relative;
@@ -85,7 +89,7 @@ h3 {
 }
 #alerts {
 	text-align: center;
-	max-width: 50%;
+	max-width: 80%;
 	margin: auto;
 	border: 4px double;
 }
@@ -286,30 +290,14 @@ article .hat {
 	margin-bottom: 7px;
 	min-width: 100px;
 }
-#feedback,#rules {
+#rules,#options {
+	float:right;
 	color: gray;
-	bloat: right;
-	position: relative;
-	display: block;
-	text-align:right;
-	margin-bottom: 2px;
-}
-#info {
-	position: absolute;
-	right: 0.2em;
-	top: 0.2em;
-}
-#options, #sync {
-	clear: right;
-	color: gray;
-	display: block;
-	float: right;
-	margin-bottom: 2px;
 }
 #options-panel {
 	position: absolute;
-	right: 70px;
-	top: 70px;
+	right: 20px;
+	top: 50px;
 }
 #report-panel {
 	position: fixed;

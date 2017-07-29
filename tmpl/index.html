@@ -9,15 +9,16 @@
 $META	<!--[if lt IE 9]><script src="{{MEDIA_URL}}js/ie.js"></script><![endif]-->
 	<script src="{{MEDIA_URL}}js/setup.js?v=6"></script>
 </head>
-<div id="info">
-<a id="feedback" href="mailto:{{EMAIL}}" target="_blank">Feedback</a>
-<a id="rules" href="#" onClick="window.open('/rules');">Posting Guidelines</a>
+<div id="top">
+	<a id="rules" href="#" onClick="window.open('/rules');">Posting Guidelines</a>
+	$NAV
 </div>
-$NAV
+<div id="top">
+	<span id="sync">Not synched.</span>
+</div>
 <h1>$TITLE</h1>
 <div id="announcements">$ANNOUNCEMENT</div>
 <div id="alerts">$ALERT</div>
-<span id="sync">Not synched.</span>
 <fieldset>
 <label for="name" class="ident">Name:</label> <input id="name" name="name"><br>
 <label for="email" class="ident">Email:</label> <input id="email" name="email"><br>
