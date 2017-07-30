@@ -129,7 +129,9 @@ exports.write_board_head = function (out, board, nav) {
 	out.write(make_board_meta(board, nav));
 	out.write(indexTmpl[i++]);
 	if (RES.navigationHtml)
-		out.write(RES.navigationHtml);
+		out.write('<nav>'
+		+ RES.navigationHtml
+		+ '</nav>');
 	out.write(indexTmpl[i++]);
 	out.write(title);
 	out.write(indexTmpl[i++]);
@@ -139,7 +141,6 @@ exports.write_board_head = function (out, board, nav) {
 		out.write(RES.wolfalert);
 	out.write(indexTmpl[i++]);
 	var buttons = common.action_link_html('#persona', 'Persona', 'persona');
-	out.write(buttons + '\n<hr>\n');
 };
 
 exports.write_thread_head = function (out, board, op, opts) {

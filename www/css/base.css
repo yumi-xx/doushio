@@ -184,6 +184,9 @@ section #banner {
 .email {
 	text-decoration: underline;
 }
+#sync {
+	color: gray;
+}
 #sync.error {
 	color: red;
 }
