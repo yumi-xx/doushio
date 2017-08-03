@@ -1,0 +1,86 @@
+a, blockquote a:hover, b.moderator, .embed {
+	color: #C7E5FF;
+}
+a:hover, blockquote a, .email b:hover, article.editing a:hover {
+	color: #5f89ac;
+}
+article, aside, .modal, .pagination {
+	background-color: #4A403A;
+	border: 1px solid #282a2e;
+}
+article.highlight, .preview, .popup-menu {
+	background-color: #1d1d21;
+	border-color: #111;
+}
+article.editing {
+	background-color: #F0D0BC;
+	border-color: #aa3;
+	color: black;
+}
+article.editing a, article.editing header {
+	color: #222;
+}
+article.editing em {
+	color: #078A3B;
+}
+article.editing li {
+	color: #ddd;
+}
+article.editing .themed {
+	color: #333;
+}
+b.admin {
+	color: #FCE347;
+}
+body {
+	background-color: #63574E;
+	color: #dddddd;
+}
+body, pre, .themed {
+	font-family: Mplus;
+	font-size: 16px;
+}
+input, select {
+	font-family: inherit;
+}
+em {
+	color: #b5bd68;
+}
+img {
+	border-radius:5px;
+}
+h1 {
+/*	font: bolder 28px Tahoma;*/
+	letter-spacing: -2px;
+}
+h2 {
+/*	font-family: Tahoma;*/
+}
+h3 {
+	color: #ce52c9;
+}
+hr {
+	border-top: 1px solid #282a2e;
+}
+.popup-menu li:hover {
+	background-color: #136;
+}
+.act:before {
+	content: "[";
+}
+.act:after {
+	content: "]";
+}
+.omit {
+	color: #707070;
+}
+#lock, .scroll-lock header {
+	background-image: url('ui/invlock.svg');
+}
+.themed {
+	color: #999;
+}
+@font-face {
+	font-family: MPlus;
+	src: url('JF-Dot-MPlusS10.ttf');
+}
