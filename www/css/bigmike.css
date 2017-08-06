@@ -1,0 +1,86 @@
+a, blockquote a, .embed {
+	color: inherit;
+}
+a:hover, .email b:hover {
+	color: #7ECBF2;
+}
+aside a:hover, blockquote a:hover {
+	color: black;
+}
+article, aside, .pagination {
+	background-color: #ed544c;
+	color: #ffffff;
+	border-right: 1px solid #000000;
+	border-bottom: 1px solid #000000;
+}
+article.highlight {
+	background-color: #6D2723;
+}
+article.editing {
+	background-color: #BD3D47;
+}
+b {
+	color: inherit;
+}
+b.admin {
+	color: #ffffff;
+	background-color: #ff0000;
+}
+b.moderator {
+	color: #7800b3;
+}
+body {
+	color: #ed544c;
+	background-color: #BBF3FF;
+	font-size: 10pt;
+	font-family: MPlus;
+}
+pre, .themed {
+	color: #cccccc;
+	font-family: MPlus;
+	font-size: 10pt;
+}
+em {
+	color: #6e9e06;
+}
+h1,h2,h3 {
+	font-weight: 700;
+	color: inherit;
+}
+h1 {
+	font-size: 30px;
+}
+h2, #announcements {
+	color: #cc0000;
+}
+h3 {
+	color: #cc0000;
+}
+hr {
+	border-top: 1px solid #ffffff;
+}
+.popup-menu li:hover {
+	background-color: #f9f2f4;
+}
+.act:before {
+	content: "[";
+}
+.act:after {
+	content: "]";
+}
+.email, .email b {
+	color: #54578c;
+}
+.modal, .preview, .popup-menu {
+	background-color: #ed544c;
+	color: #ffffff;
+	border-right: 1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+}
+.omit {
+	color: #73806c;
+}
+@font-face {
+	font-family: MPlus;
+	src: url('JF-Dot-MPlusS10.ttf');
+}

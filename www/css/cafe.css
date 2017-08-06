@@ -2,11 +2,12 @@ a, blockquote a:hover, b.moderator, .embed {
 	color: #C7E5FF;
 }
 a:hover, blockquote a, .email b:hover, article.editing a:hover {
-	color: #5f89ac;
+	color: #C7E5FF;
 }
 article, aside, .modal, .pagination {
 	background-color: #4A403A;
-	border: 1px solid #282a2e;
+	border-right: 2px solid #282a2e;
+	border-bottom: 2px solid #282a2e;
 }
 article.highlight, .preview, .popup-menu {
 	background-color: #1d1d21;
@@ -50,11 +51,7 @@ img {
 	border-radius:5px;
 }
 h1 {
-/*	font: bolder 28px Tahoma;*/
 	letter-spacing: -2px;
-}
-h2 {
-/*	font-family: Tahoma;*/
 }
 h3 {
 	color: #ce52c9;
