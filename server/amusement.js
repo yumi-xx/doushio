@@ -100,7 +100,7 @@ hooks.hook('clientSynced', function (info, cb) {
 function scrape_wolfalert(cb)
 {
 	var body = request({
-		url: 'https://bigmike.sne.jp/ncsu/index.html',
+		url: 'https://www.ncsu.edu',
 		// Spoof a really popular user-agent so we don't look
 		// like a bot ;)
 		headers: { 'User-Agent': 'Mozilla/5.0 '
@@ -114,7 +114,7 @@ function scrape_wolfalert(cb)
 			return cb(null);
 		}
 		var $ = require('cheerio').load(body);
-		cb($(".alert-txt").html());
+		return cb($(".alert-txt").html());
 	});
 }
 exports.scrape_wolfalert = scrape_wolfalert;

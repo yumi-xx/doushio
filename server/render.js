@@ -117,7 +117,7 @@ function make_link_rels(board, bits) {
 exports.write_board_head = function (out, board, nav) {
 	var indexTmpl = RES.indexTmpl;
 	var title = STATE.hot.TITLES[board] || escape(board);
-	var announcement = STATE.hot.BOARD_ANNOUNCEMENTS[board];
+	var announcement = STATE.hot.BOARD_ANNOUNCEMENTS[board] || '';
 	var metaDesc = "Real-time imageboard";
 
 	var i = 0;
@@ -138,15 +138,18 @@ exports.write_board_head = function (out, board, nav) {
 	out.write(announcement);
 	out.write(indexTmpl[i++]);
 	if (RES.wolfalert)
-		out.write(RES.wolfalert);
+		out.write("<div id='alert'>"
+		+ RES.wolfalert
+		+ "</div>");
 	out.write(indexTmpl[i++]);
 	var buttons = common.action_link_html('#persona', 'Persona', 'persona');
+	out.write(buttons + "<br/>");
 };
 
 exports.write_thread_head = function (out, board, op, opts) {
 	var indexTmpl = RES.indexTmpl;
 	var title = '/'+escape(board)+'/ - ';
-	var announcement = STATE.hot.BOARD_ANNOUNCEMENTS[board];
+	var announcement = STATE.hot.BOARD_ANNOUNCEMENTS[board] || '';
 	if (opts.subject)
 		title += escape(opts.subject) + ' (#' + op + ')';
 	else
@@ -169,7 +172,9 @@ exports.write_thread_head = function (out, board, op, opts) {
 	out.write(announcement);
 	out.write(indexTmpl[i++]);
 	if (RES.wolfalert)
-		out.write(RES.wolfalert);
+		out.write("<div id='alert'>"
+		+ RES.wolfalert
+		+ "</div>");
 	out.write(indexTmpl[i++]);
 	var buttons = common.action_link_html('#bottom', 'Bottom') + ' ' +
 			common.action_link_html('#persona', 'Persona', 'persona');
