@@ -38,7 +38,7 @@ body {
 	color: #dddddd;
 }
 body, pre, .themed {
-	font-family: Mplus;
+	font-family: MSGothic;
 	font-size: 16px;
 }
 input, select {
@@ -78,6 +78,6 @@ hr {
 	color: #999;
 }
 @font-face {
-	font-family: MPlus;
-	src: url('JF-Dot-MPlusS10.ttf');
+	font-family: MSGothic;
+	src: url('MS PGothic.ttf');
 }

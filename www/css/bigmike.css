@@ -4,9 +4,6 @@ a, blockquote a, .embed {
 a:hover, .email b:hover {
 	color: #7ECBF2;
 }
-aside a:hover, blockquote a:hover {
-	color: black;
-}
 article, aside, .pagination {
 	background-color: #ed544c;
 	color: #ffffff;
@@ -30,8 +27,8 @@ b.moderator {
 	color: #7800b3;
 }
 body {
-	color: #ed544c;
-	background-color: #BBF3FF;
+	color: #353E40;
+	background-color: #D4F7FF;
 	font-size: 10pt;
 	font-family: MPlus;
 }
@@ -41,11 +38,11 @@ pre, .themed {
 	font-size: 10pt;
 }
 em {
-	color: #6e9e06;
+	color: yellow;
 }
 h1,h2,h3 {
 	font-weight: 700;
-	color: inherit;
+	color: #ed544c;
 }
 h1 {
 	font-size: 30px;
@@ -71,11 +68,13 @@ hr {
 .email, .email b {
 	color: #54578c;
 }
+input, select {
+	font-family: inherit;
+}
 .modal, .preview, .popup-menu {
 	background-color: #ed544c;
 	color: #ffffff;
-	border-right: 1px solid #ffffff;
-	border-bottom: 1px solid #ffffff;
+	border: 1px solid #ffffff;
 }
 .omit {
 	color: #73806c;
