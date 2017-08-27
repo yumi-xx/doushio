@@ -1834,19 +1834,20 @@ Y.teardown = function (board, cb) {
 	filter.on('thread', function (thread) {
 		var op = thread.num;
 		var expiryKey = db.expiry_queue_key();
-		self.archive_thread(op, function (err) {
-			if (err)
-				return winston.error(err);
-			// Additionally remove thread from expiry queue
-			m.zrem(expiryKey, 'thread:', function (err, n) {
+		if (config.CURFEW_PURGE) {
+			self.archive_thread(op, function (err) {
 				if (err)
-					return winston.error(err)
-				winston.info("Archived thread #" + op);
-				if (n != 1)
-					winston.warn("Not archived?");
+					return winston.error(err);
+				// Additionally remove thread from expiry queue
+				m.zrem(expiryKey, 'thread:', function (err, n) {
+					if (err)
+						return winston.error(err)
+					winston.info("Archived thread #" + op);
+					if (n != 1)
+						winston.warn("Not archived?");
+				});
 			});
-		});
-
+		}
 		self._log(m, thread.num, common.TEARDOWN, []);
 	});
 	filter.on('error', cb);
