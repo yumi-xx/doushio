@@ -538,7 +538,7 @@ OS.itameshi = function (text) {
 
 // Convert text URLs to clickable links
 // *Not* recommended. Use at your own risk.
-var LINKIFY = true;
+var LINKIFY = false;
 
 /// optional 7th tokenization stage
 if (LINKIFY) { OS.linkify = function (text) {
@@ -726,7 +726,15 @@ OS.readable_time = function (time) {
 	else /* would be nice not to construct new Dates all the time */
 		offset = new Date().getTimezoneOffset() * -60 * 1000;
 	var d = new Date(time + offset);
-	var k = "日月火水木金土"[d.getUTCDay()];
+	var k = [
+		'Sun',
+		'Mon',
+		'Tue',
+		'Wed',
+		'Thu',
+		'Fri',
+		'Sat'
+	][d.getUTCDay()];
 	return (d.getUTCFullYear() + '/' + pad(d.getUTCMonth()+1) + '/' +
 		pad(d.getUTCDate()) + '&nbsp;(' + k + ') ' +
 		pad(d.getUTCHours()) + ':' +
