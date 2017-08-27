@@ -40,13 +40,10 @@ em {
 	color: #6e9e06;
 }
 h1,h2,h3 {
-	font-family: Arial,sans-serif;
-	font-weight: 700;
 	color: inherit;
 }
 h1 {
-	color: #cc0000;
-	font-size: 30px;
+	text-transform: uppercase;
 }
 h2, #announcements {
 	color: #cc0000;

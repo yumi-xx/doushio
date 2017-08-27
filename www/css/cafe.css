@@ -1,4 +1,4 @@
-a, blockquote a:hover, b.moderator, .embed {
+a, blockquote a:hover, b.moderator, .embed, #rules, #options {
 	color: #C7E5FF;
 }
 a:hover, blockquote a, .email b:hover, article.editing a:hover {

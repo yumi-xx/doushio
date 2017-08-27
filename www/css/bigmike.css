@@ -33,7 +33,12 @@ body {
 	font-family: MPlus;
 }
 pre, .themed {
-	color: #cccccc;
+	color: gray;
+	font-family: MPlus;
+	font-size: 10pt;
+}
+blockquote pre, blockquote .themed {
+	color: lightgray;
 	font-family: MPlus;
 	font-size: 10pt;
 }
@@ -54,7 +59,7 @@ h3 {
 	color: #cc0000;
 }
 hr {
-	border-top: 1px solid #ffffff;
+	border-top: 1px solid #353E40;
 }
 .popup-menu li:hover {
 	background-color: #f9f2f4;
