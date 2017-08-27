@@ -404,6 +404,9 @@ pre, .themed {
 		display: block;
 	}
 }
+blockquote {
+	word-break: break-all;
+}
 
 blockquote.twitter-tweet {
 	display: inline-block;

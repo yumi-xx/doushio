@@ -1,0 +1,77 @@
+a, blockquote a, .embed {
+	color: #3366BB;
+}
+a:hover, .email b:hover {
+	color: #d17c43;
+}
+article, aside, .pagination {
+	background-color: #C1E6FF;
+	color: #272E33;
+	border-right: 1px solid #518BB2;
+	border-bottom: 1px solid #518BB2;
+}
+article.highlight {
+	background-color: #AECFE5;
+}
+article.editing {
+	background-color: #fffff4;
+}
+b {
+	color: #1a8522;
+}
+b.admin {
+	color: #ffffff;
+	background-color: #ff0000;
+}
+b.moderator {
+	color: #7800b3;
+}
+body {
+	color: #6A7E8C;
+	background-color: #ffffff;
+	font-size: 11pt;
+	font-family: UniversLight,sans-serif;
+}
+pre, .themed {
+	color: #59543f;
+	font-size: 10pt;
+}
+em {
+	color: #6e9e06;
+}
+h1,h2,h3 {
+	color: #4B9CD3;
+}
+#announcements {
+	color: #cc0000;
+}
+header nav a {
+	color: #0a0a0a;
+}
+hr {
+	border-top: 1px solid #bac9b7;
+}
+.popup-menu li:hover {
+	background-color: #C1E6FF;
+}
+.act:before {
+	content: "[";
+}
+.act:after {
+	content: "]";
+}
+.email, .email b {
+	color: #54578c;
+}
+.modal, .preview, .popup-menu {
+	background-color: #C1E6FF;
+	border-right: 1px solid #e5e8e2;
+	border-bottom: 1px solid #e5e8e2;
+}
+.omit {
+	color: #73806c;
+}
+@font-face {
+	font-family: "UniversLight";
+	src: url("univers-light.ttf");
+}
