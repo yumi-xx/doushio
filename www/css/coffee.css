@@ -69,7 +69,7 @@ hr {
 	content: "]";
 }
 .omit {
-	color: #707070;
+	color: #d3d3d3;
 }
 #lock, .scroll-lock header {
 	background-image: url('ui/invlock.svg');

@@ -29,8 +29,8 @@ b.moderator {
 body {
 	color: #6A7E8C;
 	background-color: #ffffff;
-	font-size: 11pt;
-	font-family: UniversLight,sans-serif;
+	font-size: 12pt;
+	font-family: BemboStd,sans-serif;
 }
 pre, .themed {
 	color: #59543f;
@@ -72,6 +72,6 @@ hr {
 	color: #73806c;
 }
 @font-face {
-	font-family: "UniversLight";
-	src: url("univers-light.ttf");
+	font-family: "BemboStd";
+	src: url("BemboStd.ttf");
 }
