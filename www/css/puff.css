@@ -4,14 +4,9 @@ a, blockquote a, .embed {
 a:hover, .email b:hover {
 	color: #d17c43;
 }
-article, aside {
+article, aside, .pagination {
 	border-right: 1px solid #7E5B33;
 	border-bottom: 1px solid #7E5B33;
-}
-.pagination {
-	background-color: #f9f2f4;
-	border-right: 1px solid #c7254e;
-	border-bottom: 1px solid #c7254e;
 }
 article.highlight {
 	background-color: #fff0ff;
@@ -38,8 +33,13 @@ body {
 	background-position:bottom right;
 	color: #601407;
 	background-color: #ffffff;
-	font-size: 11pt;
-	font-family: UniversLight,sans-serif;
+	font-size: 12pt;
+	font-family: BemboStd,sans-serif;
+}
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+	body {
+		background-image: none;
+	}
 }
 pre, .themed {
 	color: #59543f;
@@ -83,6 +83,6 @@ hr {
 	color: #73806c;
 }
 @font-face {
-	font-family: "UniversLight";
-	src: url("univers-light.ttf");
+	font-family: "BemboStd";
+	src: url("BemboStd.ttf");
 }

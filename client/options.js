@@ -121,13 +121,14 @@ options.on('change:lastn', function (model, lastN) {
 var themes = [
 	'ncsu',
 	'moe',
-	'coffee',
+	'nu-age',
 	'unc',
 	'puff',
 	'bigmike',
 	'gar',
 	'ashita',
 	'console',
+	'coffee',
 	'tea',
 	'cs',
 ];

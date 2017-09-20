@@ -1,0 +1,77 @@
+a, blockquote a:hover, b.moderator, .embed, #rules, #options {
+	color: #473E59;
+}
+a:hover, .email b:hover, article.editing a:hover {
+	color: #C7E5FF;
+}
+article, aside, .modal, .pagination {
+	background-color: #FF9EDA;
+	border-right: 2px solid #282a2e;
+	border-bottom: 2px solid #282a2e;
+}
+article.highlight, .preview, .popup-menu {
+	background-color: #FDDC71;
+	border-color: #111;
+}
+article.editing {
+	background-color: #F0D0BC;
+	border-color: #aa3;
+	color: black;
+}
+article.editing a, article.editing header {
+	color: #222;
+}
+article.editing em {
+	color: #078A3B;
+}
+article.editing li {
+	color: #ddd;
+}
+b.admin {
+	color: #FCE347;
+}
+body {
+	background-color: #AED2D4;
+	color: #473E59;
+}
+body, pre, .themed {
+	font-family: MSGothic;
+	font-size: 16px;
+}
+input, select {
+	font-family: inherit;
+}
+em {
+	color: #FF6F6F;
+}
+h1 {
+	letter-spacing: -2px;
+}
+h3 {
+	color: #ce52c9;
+}
+hr {
+	border-top: 1px solid #FF9EDA;
+}
+.popup-menu li:hover {
+	background-color: #136;
+}
+.act:before {
+	content: "[";
+}
+.act:after {
+	content: "]";
+}
+.omit {
+	color: #d3d3d3;
+}
+#lock, .scroll-lock header {
+	background-image: url('ui/invlock.svg');
+}
+.themed {
+	color: #fff;
+}
+@font-face {
+	font-family: MSGothic;
+	src: url('MS PGothic.ttf');
+}
