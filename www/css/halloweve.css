@@ -1,0 +1,121 @@
+a, blockquote a {
+	color: #FFEE4A;
+}
+a:hover, .email b:hover {
+	color: #d17c43;
+}
+article, aside, .pagination {
+	background-color: #3B233E;
+	border: 0px;
+}
+article.highlight {
+	background-color: #5F3964;
+	border-color: #BF72CA;
+}
+article.editing {
+	background-color: #834E8B;
+}
+b {
+	color: #FFC501;
+}
+b.admin {
+	color: #d60000;
+	background-color: initial;
+}
+b.moderator {
+	color: #7800b3;
+	background-color: initial;
+}
+body {
+  color: #FE9600;
+	background-color: #03001C;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 10pt;
+}
+blockquote {
+  color: #FE9600;
+}
+pre, .themed {
+  color: #BE7000;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+em {
+	color: #FFEE4A;
+}
+h1, h2 {
+	animation: fire 2.0s infinite alternate;
+}
+h1, h2, h3, #announcements {
+	color: #FFEE4A;
+}
+h1 {
+	font-family: "MS Pゴシック", "MS PGothic", "Mona", "Hiragino Kaku Gothic Pro", Helvetica, sans-serif;
+	font-size: 30px;
+	text-shadow: #8e3523 1px 1px 0px;
+	letter-spacing: 1px;
+}
+h2 {
+	font-family: "MS Pゴシック", "MS PGothic", "Mona", "Hiragino Kaku Gothic Pro", Helvetica, sans-serif;
+	text-shadow: #8e3523 1px 1px 0px;
+}
+header nav a {
+	color: #FFEE4A;
+}
+hr {
+	border-top: 1px solid #bac9b7;
+}
+.popup-menu li:hover {
+	background-color: #77477E;
+}
+.act:before {
+	content: "[";
+}
+.act:after {
+	content: "]";
+}
+.email, .email b {
+	color: #54578c;
+}
+.modal, .preview, .popup-menu {
+	background-color: #77477E;
+	border: 0px;
+}
+.omit {
+	color: #73806c;
+}
+
+.anim_fire
+{
+	animation: fire 2.0s infinite alternate;
+}
+@keyframes fire
+{
+   0%
+   {
+       text-shadow:
+       5px -25px 50px yellow,
+       0 0px 20px red,
+       10px -15px 15px orange;
+   }
+   33%
+   {
+       text-shadow:
+       0 -20px 30px yellow,
+       15px -5px 20px red,
+       5px 0 20px orange;
+   }
+   66%
+   {
+       text-shadow:
+       10px -25px 50px yellow,
+       5px -10px 20px red,
+       0 -5px 20px orange;
+   }
+   100%
+   {
+       text-shadow:
+       0 -20px 50px yellow,
+       5px -15px 20px red,
+       10px 0 20px orange;
+   }
+}

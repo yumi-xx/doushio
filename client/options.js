@@ -124,6 +124,7 @@ var themes = [
 	'nu-age',
 	'unc',
 	'puff',
+	'halloweve',
 	'bigmike',
 	'gar',
 	'ashita',
