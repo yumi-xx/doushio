@@ -86,6 +86,7 @@ h3 {
 }
 #announcements {
 	text-align: center;
+	margin: auto;
 	max-width: 80%;
 }
 #header {

@@ -7,6 +7,7 @@ a:hover, .email b:hover {
 article, aside, .pagination {
 	border-right: 1px solid #7E5B33;
 	border-bottom: 1px solid #7E5B33;
+	background-color: #ffffff;
 }
 article.highlight {
 	background-color: #fff0ff;

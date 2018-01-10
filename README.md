@@ -1,6 +1,9 @@
 Real-time imageboard.
 MIT licensed.
 
+This fork provides MySQL authentication becuase Github OAuth is an offense.
+But so is node.js. The real magic happens at https://github.com/lalcmellkmal/doushio
+
 Setup:
 
 * Install dependencies listed below

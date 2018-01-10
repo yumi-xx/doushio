@@ -13,8 +13,7 @@ article.highlight {
 	background-color: #fff0ff;
 }
 article.editing {
-	background-color: #fffff4;
-	border-color: #fffff4;
+	background-color: #FFE87C;
 }
 b {
 	color: #1a8522;
@@ -30,11 +29,11 @@ body {
 	color: #c7254e;
 	background-color: #ffffff;
 	font-size: 10pt;
-	font-family: UniversLight,sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
+
 }
 pre, .themed {
 	color: #59543f;
-	font-size: 10pt;
 }
 em {
 	color: #6e9e06;
@@ -44,6 +43,7 @@ h1,h2,h3 {
 }
 h1 {
 	text-transform: uppercase;
+	letter-spacing: -1px;
 }
 h2, #announcements {
 	color: #cc0000;
